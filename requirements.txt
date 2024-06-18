@@ -1,0 +1,7 @@
+langchain-community==0.2.5
+transformers==4.41.2
+torch==2.2.2
+llama_cpp_python==0.2.78
+ibm_watson_machine_learning==1.0.359
+ibm_watsonx_ai==1.0.8
+langchain-ibm==0.1.7
