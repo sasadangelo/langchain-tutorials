@@ -1,7 +1,0 @@
-####################################################################################################
-# LLama.cpp configuration parameters
-####################################################################################################
-provider: "llamacpp"
-model: "llama-2-7b-chat-gguf"
-transformers_path: "~/.cache/huggingface/transformers"
-model_path: "llama-2-7b-chat-gguf/llama-2-7b-chat.Q2_K.gguf"
