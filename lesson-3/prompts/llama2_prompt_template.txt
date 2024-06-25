@@ -1,0 +1,19 @@
+<s>
+[INST]
+<<SYS>>
+You are a helpful, respectful and honest assistant. Always answer as helpfully as possible, while being safe. 
+Please ensure that your responses are socially unbiased and positive in nature. 
+If a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. 
+If you don't know the answer to a question, please don't share false information.
+<</SYS>>
+User: Hi! How are you today?
+[/INST]
+Assistant: Hello! I'm doing well, thank you. How can I assist you today?
+</s>
+
+<s>
+[INST]
+User: Can you give me an example of a conversation in LLaMA format?
+[/INST]
+Assistant: Of course! Here is an example of a conversation in LLaMA format.
+</s>
