@@ -10,7 +10,8 @@ def remove_empty_lines(value: str) -> str:
 def get_prompt_template_from_jinja2(
     prompt_path: str,
     prompt_name: str,
-    jinja2_placeholders: Optional[Dict[str, str]] = None
+    input_variables: Dict[str, str],
+    jinja2_placeholders: Dict[str, str]
 ) -> str:
     """
     Loads a .txt file as a Jinja2 template and converts it into a LangChain PromptTemplate.
@@ -26,7 +27,8 @@ def get_prompt_template_from_jinja2(
     template = env.get_template(prompt_name)
     jinja2_placeholders = jinja2_placeholders or {}
     prompt_string = remove_empty_lines(template.render(jinja2_placeholders))
-    return prompt_string
+    prompt_template = PromptTemplate(input_variables=["system_message", "user_message", "ai_message"], template=prompt_string)
+    return prompt_template
 
 def generate_random_ai_message(length: int = 50) -> str:
     return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
@@ -40,20 +42,19 @@ If you don't know the answer to a question, please don't share false information
     START_TEMPLATE_PATH = "prompts"
     START_TEMPLATE_NAME = "llama2_prompt_template.j2"
 
-    start_conversation_template_string = get_prompt_template_from_jinja2(
+    start_conversation_template = get_prompt_template_from_jinja2(
         prompt_path=START_TEMPLATE_PATH,
         prompt_name=START_TEMPLATE_NAME,
+        input_variables=["system_message", "user_message", "ai_message"],
         jinja2_placeholders={"system_message": "{system_message}", "user_message": "{user_message}", "ai_message": "{ai_message}"}
     )
 
-    conversation_template_string = get_prompt_template_from_jinja2(
+    conversation_template = get_prompt_template_from_jinja2(
         prompt_path=START_TEMPLATE_PATH,
         prompt_name=START_TEMPLATE_NAME,
+        input_variables=["user_message", "ai_message"],
         jinja2_placeholders={"system_message": None, "user_message": "{user_message}", "ai_message": "{ai_message}"}
     )
-
-    start_conversation_template = PromptTemplate(input_variables=["system_message", "user_message", "ai_message"], template=start_conversation_template_string)
-    conversation_template = PromptTemplate(input_variables=["user_message", "ai_message"], template=conversation_template_string)
 
     # First user and ai conversation
     user_message = input("User:")
