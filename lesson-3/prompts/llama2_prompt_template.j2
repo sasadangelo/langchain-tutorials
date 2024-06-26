@@ -1,0 +1,11 @@
+<s>
+[INST]
+{% if system_message %}
+<<SYS>>
+{{ system_message }}
+<</SYS>>
+{% endif %}
+{{ user_message }}
+[/INST]
+{{ ai_message }}
+</s>
