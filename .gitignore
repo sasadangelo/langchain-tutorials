@@ -3,3 +3,4 @@
 **/.env_openai
 **/.env_watsonx
 venv
+.vscode/
