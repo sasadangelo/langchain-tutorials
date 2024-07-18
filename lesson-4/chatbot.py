@@ -47,8 +47,7 @@ try:
         user_message = input("You: ")
 
         # Add the user message to the list of users
-        user_message_obj = HumanMessage(content=user_message)
-        memory.chat_memory.add_message(user_message_obj)
+        memory.chat_memory.add_message(HumanMessage(content=user_message))
 
         # Generate the prompt from the template
         formatted_prompt = prompt_template.format(messages=memory.chat_memory.messages)
@@ -61,8 +60,7 @@ try:
         ai_message = provider.generate(formatted_prompt)
 
         # Add the AI message to the chat history
-        ai_message_obj = AIMessage(content=ai_message)
-        memory.chat_memory.add_message(ai_message_obj)
+        memory.chat_memory.add_message(AIMessage(content=ai_message))
 
         # Print the AI answer
         print(f"Assistant: {ai_message}")

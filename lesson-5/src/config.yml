@@ -1,0 +1,54 @@
+####################################################################################################
+# WatsonX configuration parameters
+####################################################################################################
+#provider: "watsonx"
+#model: "ibm/granite-13b-chat-v2"
+#project_id: "c189bcc3-b228-4a3d-b6f9-2817c587b178"
+#api_url: "https://us-south.ml.cloud.ibm.com"
+#parameters:
+#  decoding_method: greedy
+#  min_new_tokens: 1
+#  max_new_tokens: 100
+
+####################################################################################################
+# HuggingFaces configuration parameters
+####################################################################################################
+# provider: "huggingfaces"
+# model: "distilgpt2"
+
+####################################################################################################
+# LLama.cpp configuration parameters
+####################################################################################################
+# provider: "llamacpp"
+# model: "llama-2-7b-chat-gguf"
+# transformers_path: "~/.cache/huggingface/transformers"
+# model_path: "llama-2-7b-chat-gguf/llama-2-7b-chat.Q2_K.gguf"
+
+####################################################################################################
+# Ollama configuration parameters
+####################################################################################################
+provider: "ollama"
+model: "llama3"
+
+####################################################################################################
+# OpenAI configuration parameters
+####################################################################################################
+# provider: "openai"
+# model: "gpt-3.5-turbo"
+# You can use GPT 4.0 too
+# model: "gpt-4"
+# temperature: 0
+
+####################################################################################################
+# System Message Prompt
+####################################################################################################
+system_message: |
+  You are a helpful, respectful and honest assistant. Always answer as helpfully as possible, while being safe.
+  Please ensure that your responses are socially unbiased and positive in nature.
+  If a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct.
+  If you don't know the answer to a question, please don't share false information.
+
+####################################################################################################
+# DEBUG option
+####################################################################################################
+debug: true
