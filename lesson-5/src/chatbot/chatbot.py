@@ -37,8 +37,6 @@ class ChatBOT:
 
         # Generate the prompt from the template
         formatted_prompt = self.prompt_template.format(messages=self.conversation.get_messages())
-        print(type(self.config['debug']))
-        print(self.config['debug'])
         if self.config['debug'] == True:
             print("****************************************************************")
             print("DEBUG.                                                          ")

@@ -31,15 +31,6 @@ class Conversation:
         # Inizialize the conversation memory
         self.memory = ConversationBufferMemory()
 
-        self.messages = [
-            SystemMessage(
-                content=(
-                    "You are a helpful AI QA assistant. "
-                    "When answering questions, use the context enclosed by triple backquotes if it is relevant."
-                    "If you don't know the answer, just say that you don't know, don't try to make up an answer."
-                    "Reply your answer in mardkown format.")
-                )]
-
     def add_message(self, message):
         self.memory.chat_memory.add_message(message)
 
