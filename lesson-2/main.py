@@ -25,7 +25,9 @@ config = load_config(args.config)
 # Initialize model based on config
 provider = LLMProviderFactory.get_provider(config)
 
-# Generate text using the model
-prompt = "Who is Robinson Crusoe?"
-result = provider.generate(prompt)
+# Inizialize the message list
+messages = [{"role": "user", "content": "Who is Robinson Crusoe?"}]
+
+# Generate the answer using the model
+result = provider.generate(messages)
 print(result)
