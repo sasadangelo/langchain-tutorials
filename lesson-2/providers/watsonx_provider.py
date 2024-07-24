@@ -15,4 +15,5 @@ class WatsonXProvider(LLMProvider):
         )
 
     def generate(self, messages):
-        return self.model.invoke(messages[0]['content'])
+        message=messages[0]
+        return self.model.invoke(message['content'])
