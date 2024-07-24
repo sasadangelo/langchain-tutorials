@@ -1,20 +1,14 @@
 ####################################################################################################
 # WatsonX configuration parameters
 ####################################################################################################
-#provider: "watsonx"
-#model: "ibm/granite-13b-chat-v2"
-#project_id: "c189bcc3-b228-4a3d-b6f9-2817c587b178"
-#api_url: "https://us-south.ml.cloud.ibm.com"
-#parameters:
-#  decoding_method: greedy
-#  min_new_tokens: 1
-#  max_new_tokens: 100
-
-####################################################################################################
-# HuggingFaces configuration parameters
-####################################################################################################
-# provider: "huggingfaces"
-# model: "distilgpt2"
+# provider: "watsonx"
+# model: "ibm/granite-13b-chat-v2"
+# project_id: "c189bcc3-b228-4a3d-b6f9-2817c587b178"
+# api_url: "https://us-south.ml.cloud.ibm.com"
+# parameters:
+#   decoding_method: greedy
+#   min_new_tokens: 1
+#   max_new_tokens: 500
 
 ####################################################################################################
 # LLama.cpp configuration parameters
@@ -23,6 +17,7 @@
 # model: "llama-2-7b-chat-gguf"
 # transformers_path: "~/.cache/huggingface/transformers"
 # model_path: "llama-2-7b-chat-gguf/llama-2-7b-chat.Q2_K.gguf"
+# chat_format: "llama-2"
 
 ####################################################################################################
 # Ollama configuration parameters
@@ -35,9 +30,6 @@ model: "llama3"
 ####################################################################################################
 # provider: "openai"
 # model: "gpt-3.5-turbo"
-# You can use GPT 4.0 too
-# model: "gpt-4"
-# temperature: 0
 
 ####################################################################################################
 # System Message Prompt

@@ -6,7 +6,7 @@ class WatsonXProvider(LLMProvider):
         self.url = self.config.get("api_url")
         self.project_id = self.config.get("project_id")
         parameters = self.config.get("parameters", {})
-        
+
         self.model = WatsonxLLM(
             model_id=self.config["model"],
             url=self.url,
@@ -14,5 +14,6 @@ class WatsonXProvider(LLMProvider):
             params=parameters
         )
 
-    def generate(self, prompt):
-        return self.model.invoke(prompt)
+    def generate(self, messages):
+        message=messages[-1]
+        return self.model.invoke(message['content'])

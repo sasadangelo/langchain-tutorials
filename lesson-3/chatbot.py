@@ -28,24 +28,22 @@ provider = LLMProviderFactory.get_provider(config)
 # Generate text using the model
 system_message = config['system_message']
 
-# Inizializzazione della lista dei messaggi
-# Aggiunta del messaggio di sistema
-messages = []
-messages.append({"role": "system", "content": system_message})
+# Inizialize the message list
+messages = [{"role": "system", "content": system_message}]
 
 try:
     while True:
-        # Input dell'utente
+        # Input from the user
         user_input = input("You: ")
 
-        # Aggiunta del messaggio dell'utente alla lista dei messaggi
+        # Add the user message to the messages list
         user_message = {"role": "user", "content": user_input}
         messages.append(user_message)
 
-        # Ottenimento della risposta dal modello
-        ai_response = provider.generate(user_input)
+        # Get the answer from the model
+        ai_response = provider.generate(messages)
 
-        # Aggiunta del messaggio dell'AI alla lista dei messaggi
+        # Add the AI message to the messages list
         ai_message = {"role": "assistant", "content": ai_response}
         messages.append(ai_message)
 

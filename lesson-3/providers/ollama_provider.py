@@ -6,6 +6,6 @@ class OllamaProvider(LLMProvider):
         model_name = self.config['model']
         self.model = Ollama(model=model_name)
 
-    def generate(self, prompt):
-        result = self.model.invoke(prompt)
+    def generate(self, messages):
+        result = self.model.invoke(messages[-1]['content'])
         return result
