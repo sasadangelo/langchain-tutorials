@@ -7,6 +7,6 @@ class OpenAIProvider(LLMProvider):
         temperature = self.config['temperature']
         self.model = ChatOpenAI(temperature=temperature, model_name=model_name)
 
-    def generate(self, prompt):
-        result = self.model.invoke(prompt)
+    def generate(self, messages):
+        result = self.model.invoke(messages[0]['content'])
         return result
