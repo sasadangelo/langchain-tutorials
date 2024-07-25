@@ -8,6 +8,6 @@ class LLamaCppProvider(LLMProvider):
         transformers_path = os.path.expanduser(self.config['transformers_path'])
         self.model = Llama(model_path=transformers_path + "/" + model_path)
 
-    def generate(self, prompt):
-        result = self.model(prompt, max_tokens=200)
-        return result['choices'][0]['text']
+    def generate(self, prompt_template, messages):
+        result = self.model.create_chat_completion(messages, max_tokens=None)
+        return result['choices'][0]['message']['content']

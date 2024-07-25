@@ -1,10 +1,9 @@
 import argparse
+import sys
 from dotenv import load_dotenv
 import yaml
 from providers.provider_factory import LLMProviderFactory
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_core.messages import SystemMessage, AIMessage, HumanMessage
-from langchain.memory import ConversationBufferMemory
 
 def load_environment(env_file):
     load_dotenv(env_file)
@@ -30,40 +29,35 @@ provider = LLMProviderFactory.get_provider(config)
 # Generate text using the model
 system_message = config['system_message']
 
-# Definition of the prompt template
+# Prompt template definition
 prompt_template = ChatPromptTemplate.from_messages(
     [
-        SystemMessage(content=system_message),
+        ("system", system_message),
         MessagesPlaceholder(variable_name="messages"),
     ]
 )
 
-# Inizialize the conversation memory
-memory = ConversationBufferMemory()
+# Initialize messages list
+messages = [{"role": "system", "content": system_message}]
 
 try:
     while True:
-        # Ask input from the user
-        user_message = input("You: ")
+        # Input from the user
+        user_input = input("You: ")
 
-        # Add the user message to the list of users
-        memory.chat_memory.add_message(HumanMessage(content=user_message))
-
-        # Generate the prompt from the template
-        formatted_prompt = prompt_template.format(messages=memory.chat_memory.messages)
-        print("****************************************************************")
-        print("Chat History + Question:")
-        print(formatted_prompt)
-        print("****************************************************************")
+        # Add user message to the conversation
+        user_message = {"role": "user", "content": user_input}
+        messages.append(user_message)
 
         # Get the answer from the model
-        ai_message = provider.generate(formatted_prompt)
+        ai_response = provider.generate(prompt_template, messages)
 
-        # Add the AI message to the chat history
-        memory.chat_memory.add_message(AIMessage(content=ai_message))
+        # Add the AI reply to the conversation
+        ai_message = {"role": "assistant", "content": ai_response}
+        messages.append(ai_message)
 
-        # Print the AI answer
-        print(f"Assistant: {ai_message}")
+        # Print the AI reply
+        print(f"Assistant: {ai_response}")
 except EOFError:
-    # Terminate the conversation
+    # Terminate the conversation when the user press CTRL-D
     print("\nBye.")
