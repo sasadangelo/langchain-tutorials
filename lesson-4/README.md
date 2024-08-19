@@ -1,4 +1,4 @@
-# Lesson 4: a simple Chatbot with Context with context
+# Lesson 4: a simple Chatbot with context
 
 In this lesson I will show you how to implement a simple Chatbot with context just reworking a bit the code in the lesson 3.
 I assume you already know how you can switch from one provider to another, by default, the Ollama provider is set with the LLama 3 model.
