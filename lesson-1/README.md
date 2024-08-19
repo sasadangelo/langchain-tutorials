@@ -7,7 +7,7 @@ This tutorial show how to ask to LLM the question "Who is Robinson Crusoe?" usin
 * LLamaCPP
 * WatsonX
 
-Before run one of the tutorials change the directory in the `lesson-1`folder:
+Before run one of the tutorials change the directory in the `lesson-1` folder:
 ```
 cd lesson-1
 ```
