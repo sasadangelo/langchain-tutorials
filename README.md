@@ -8,6 +8,7 @@ These tutorials will help you to build, step by step, a chatbot using Large Lang
 * [Lesson 4: a simple Chatbot with Context](lesson-4/README.md)
 * [Lesson 5: just a few improvements](lesson-5/README.md)
 * [Lesson 6: an Object Oriented ChatBOT with Lang Chain](lesson-6/README.md)
+* [Lesson 7: Configure generation parameters](lesson-7/README.md)
 
 ## Prerequisites
 
