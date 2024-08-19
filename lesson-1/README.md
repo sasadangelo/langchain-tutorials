@@ -7,11 +7,15 @@ This tutorial show how to ask to LLM the question "Who is Robinson Crusoe?" usin
 * LLamaCPP
 * WatsonX
 
+Before run one of the tutorials change the directory in the `lesson-1`folder:
+```
+cd lesson-1
+```
+
 ## How to run "Hello LLM" with Ollama
 
 Type the following command:
 ```
-cd lesson-1
 python3 ollama.py
 ```
 
@@ -19,7 +23,6 @@ python3 ollama.py
 
 To run the "Hello LLM" with WatsonX you need to copy the `.env_sample`file in `.env` and add your IBM Cloud API Key to the `WATSONX_APIKEY` variable. Finally, type the following command:
 ```
-cd lesson-1
 python3 watsonx.py
 ```
 
@@ -27,7 +30,6 @@ python3 watsonx.py
 
 To run the "Hello LLM" with WatsonX you need to copy the `.env_sample`file in `.env` and add your IBM Cloud API Key to the `OPENAI_API_KEY` variable. Type the following command:
 ```
-cd lesson-1
 python3 myopenai.py
 ```
 
@@ -35,6 +37,5 @@ python3 myopenai.py
 
 Type the following command:
 ```
-cd lesson-1
 python3 myllama_cpp.py
 ```
