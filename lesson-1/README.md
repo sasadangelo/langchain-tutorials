@@ -23,12 +23,12 @@ cd lesson-1
 python3 watsonx.py
 ```
 
-## How to run "Hello LLM" with OpeAI
+## How to run "Hello LLM" with OpenAI
 
-Type the following command:
+To run the "Hello LLM" with WatsonX you need to copy the `.env_sample`file in `.env` and add your IBM Cloud API Key to the `OPENAI_API_KEY` variable. Type the following command:
 ```
 cd lesson-1
-python3 ollama.py
+python3 myopenai.py
 ```
 
 ## How to run "Hello LLM" with LLama_cpp
