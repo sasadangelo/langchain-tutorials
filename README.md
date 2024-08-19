@@ -5,6 +5,7 @@ These tutorials will help you to build, step by step, a chatbot using Large Lang
 * [Lesson 1: Hello LLM](lesson-1/README.md)
 * [Lesson 2: Hello LLM with providers configuration](lesson-2/README.md)
 * [Lesson 3: a simple Chatbot](lesson-3/README.md)
+* [Lesson 4: a simple Chatbot with Context](lesson-4/README.md)
 
 ## Prerequisites
 
