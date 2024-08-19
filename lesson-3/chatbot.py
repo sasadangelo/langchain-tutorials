@@ -28,7 +28,7 @@ provider = LLMProviderFactory.get_provider(config)
 # Generate text using the model
 system_message = config['system_message']
 
-# Inizialize the message list
+# Initialize the messages list
 messages = [{"role": "system", "content": system_message}]
 
 try:
@@ -36,19 +36,19 @@ try:
         # Input from the user
         user_input = input("You: ")
 
-        # Add the user message to the messages list
+        # Add the user message to the conversation
         user_message = {"role": "user", "content": user_input}
         messages.append(user_message)
 
         # Get the answer from the model
         ai_response = provider.generate(messages)
 
-        # Add the AI message to the messages list
+        # Add the AI reply to the conversation
         ai_message = {"role": "assistant", "content": ai_response}
         messages.append(ai_message)
 
-        # Stampa della risposta dell'AI
+        # Print the AI reply
         print(f"Assistant: {ai_response}")
 except EOFError:
-    # Termina la conversazione quando viene premuto CTRL-D
+    # Terminate the conversation when the user press CTRL-D
     print("\nBye.")

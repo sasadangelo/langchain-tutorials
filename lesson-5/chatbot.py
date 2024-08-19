@@ -46,13 +46,13 @@ try:
         # Input from the user
         user_input = input("You: ")
 
-        # Add the user message to the list of users
+        # Add the user message to the conversation
         memory.chat_memory.add_message(HumanMessage(content=user_input))
 
         # Get the answer from the model
         ai_response = provider.generate(prompt_template, memory.chat_memory.messages)
 
-        # Add the AI message to the chat history
+        # Add the AI message to the conversation
         memory.chat_memory.add_message(AIMessage(content=ai_response))
 
         # Print the AI reply

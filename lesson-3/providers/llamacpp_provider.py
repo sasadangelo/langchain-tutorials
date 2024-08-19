@@ -1,7 +1,6 @@
 import os
 from providers.provider import LLMProvider
 from llama_cpp import Llama
-from llama_cpp import Llama
 
 class LLamaCppProvider(LLMProvider):
     def create_model(self):

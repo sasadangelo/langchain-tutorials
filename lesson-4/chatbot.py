@@ -1,5 +1,4 @@
 import argparse
-import sys
 from dotenv import load_dotenv
 import yaml
 from providers.provider_factory import LLMProviderFactory
@@ -37,7 +36,7 @@ prompt_template = ChatPromptTemplate.from_messages(
     ]
 )
 
-# Initialize messages list
+# Initialize the messages list
 messages = [{"role": "system", "content": system_message}]
 
 try:
@@ -45,7 +44,7 @@ try:
         # Input from the user
         user_input = input("You: ")
 
-        # Add user message to the conversation
+        # Add the user message to the conversation
         user_message = {"role": "user", "content": user_input}
         messages.append(user_message)
 

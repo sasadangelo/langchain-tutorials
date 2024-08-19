@@ -6,9 +6,9 @@
 # project_id: "c189bcc3-b228-4a3d-b6f9-2817c587b178"
 # api_url: "https://us-south.ml.cloud.ibm.com"
 # parameters:
-#  decoding_method: greedy
-#  min_new_tokens: 1
-#  max_new_tokens: 500
+#   decoding_method: greedy
+#   min_new_tokens: 1
+#   max_new_tokens: 500
 
 ####################################################################################################
 # LLama.cpp configuration parameters
