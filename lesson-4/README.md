@@ -9,5 +9,6 @@ In this tutorial, the chatbot will always submit to the LLM the user question wi
 To run the chatbot type the following command:
 
 ```
+cd lesson-4
 python3 chatbot.py
 ```
