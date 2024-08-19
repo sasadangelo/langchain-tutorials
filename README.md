@@ -36,6 +36,13 @@ In another terminal you can list the downloaded model using the commands:
 ollama list
 ```
 
+### Clone the LangChain-Tutorials repository
+
+To run the tutorials you need to clone the `langchain-tutorials` repository:
+```
+git clone https://github.com/sasadangelo/langchain-tutorials
+```
+
 ## How to run the tutorials
 
 To run the tutorials do the following steps:
