@@ -45,7 +45,7 @@ class ChatBOT:
             print("****************************************************************")
 
         # Add the user message to the list of users
-        self.conversation.add_message(HumanMessage(content=formatted_prompt))
+        # self.conversation.add_message(HumanMessage(content=formatted_prompt))
         # Get the answer from the model
         ai_message = self.provider.generate(formatted_prompt)
         self.conversation.add_message(AIMessage(content=ai_message))

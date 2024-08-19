@@ -10,4 +10,11 @@ class LLamaCppProvider(LLMProvider):
 
     def generate(self, prompt):
         result = self.model(prompt, max_tokens=200)
-        return result['choices'][0]['text']
+        answer = result['choices'][0]['text']
+
+        # Cleanup the answer
+        answer_cleaned_up = answer.split(': ', 1)[-1]
+        if answer_cleaned_up.startswith('\n'):
+            answer_cleaned_up = answer_cleaned_up[1:]
+
+        return answer_cleaned_up
