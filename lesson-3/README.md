@@ -10,5 +10,6 @@ If you try to send a followup question related to the first question the Chatbot
 To run the chatbot type the following command:
 
 ```
+cd lesson-3
 python3 chatbot.py
 ```
