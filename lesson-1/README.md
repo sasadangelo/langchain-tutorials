@@ -1,4 +1,4 @@
-# Hello LLM
+# Lesson-1: Hello LLM
 
 This tutorial show how to ask to LLM the question "Who is Robinson Crusoe?" using the following LLM providers:
 
