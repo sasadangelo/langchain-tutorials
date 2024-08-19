@@ -1,4 +1,4 @@
-# Lesson 2: run "Hello LLM" configuring the providers
+# Lesson 2: "Hello LLM" with providers configuration
 
 In this lesson, we will configure the LLM provider using the new `config.yaml`configuration file.
 
