@@ -2,11 +2,9 @@ from providers.watsonx_provider import WatsonXProvider
 from providers.ollama_provider import OllamaProvider
 from providers.llamacpp_provider import LLamaCppProvider
 from providers.openai_provider import OpenAIProvider
-from providers.huggingfaces_provider import HuggingFacesProvider
 
 class LLMProviderFactory:
     providers = {
-        "huggingfaces": HuggingFacesProvider,
         "llamacpp": LLamaCppProvider,
         "ollama": OllamaProvider,
         "openai": OpenAIProvider,
