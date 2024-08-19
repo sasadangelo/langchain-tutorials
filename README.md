@@ -6,10 +6,34 @@ These tutorials will help you to build, step by step, a chatbot using Large Lang
 
 ## Prerequisites
 
-You need Python 3 installed on your machine. On Mac you can simply type:
+### How to install Python 3
+
+To run the tutorials you need Python 3 installed on your machine. On Mac you can simply type:
 
 ```
 brew install python3
+```
+
+### How to setup Ollama
+
+To run the tutorials you need to install ollama cli:
+```
+brew install ollama
+```
+
+Then, you should download the LLM **llama3** model:
+```
+ollama pull llama3
+```
+
+This commandwill download the model in `~/.ollama`folder. You can start the ollama server with the command:
+```
+ollama serve
+```
+
+In another terminal you can list the downloaded model using the commands:
+```
+ollama list
 ```
 
 ## How to run the tutorials
