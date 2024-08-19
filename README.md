@@ -38,9 +38,11 @@ ollama list
 
 ### Clone the LangChain-Tutorials repository
 
-To run the tutorials you need to clone the `langchain-tutorials` repository:
+To run the tutorials you need to clone the `langchain-tutorials` repository in a `<workspace>` folder:
 ```
+cd <workspace>
 git clone https://github.com/sasadangelo/langchain-tutorials
+cd langchain-tutorials
 ```
 
 ## How to run the tutorials
