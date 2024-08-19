@@ -1,5 +1,30 @@
 # Langchain tutorials
 
-These turorial will help you to buil, step by step, a chatbot using Large Languages Models and Lanch Chain. Here the list of lessons:
+These tutorials will help you to build, step by step, a chatbot using Large Languages Models (LLM) and Lanch Chain. Here the list of lessons:
 
 * [Lesson 1: Hello LLM](lesson-1/README.md)
+
+## Prerequisites
+
+You need Python 3 installed on your machine. On Mac you can simply type:
+
+```
+brew install python3
+```
+
+## How to run the tutorials
+
+To run the tutorials do the following steps:
+
+1. Create and activate the Python virtual environment:
+```
+python3 -m venv venv
+source venv/bin/activate
+```
+
+2. Install the dependencies
+```
+pip3 install -r requirements.txt
+```
+
+3. Run the tutorial following the instructions in each lesson
