@@ -7,5 +7,6 @@ In this lesson I will show you a small improvements using appropriate LangChain 
 To run the chatbot type the following command:
 
 ```
+cd lesson-5
 python3 chatbot.py
 ```
