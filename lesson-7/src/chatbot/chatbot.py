@@ -34,19 +34,7 @@ class ChatBOT:
     def get_answer(self, question):
         # Add the user message to the list of users
         self.conversation.add_message(HumanMessage(content=question))
-
-        # Generate the prompt from the template
-        formatted_prompt = self.prompt_template.format(messages=self.conversation.get_messages())
-        if self.config['debug'] == True:
-            print("****************************************************************")
-            print("DEBUG.                                                          ")
-            print("Chat History + Question:                                        ")
-            print(formatted_prompt)
-            print("****************************************************************")
-
-        # Add the user message to the list of users
-        # self.conversation.add_message(HumanMessage(content=formatted_prompt))
         # Get the answer from the model
-        ai_message = self.provider.generate(formatted_prompt)
+        ai_message = self.provider.generate(self.conversation.get_messages())
         self.conversation.add_message(AIMessage(content=ai_message))
         return ai_message

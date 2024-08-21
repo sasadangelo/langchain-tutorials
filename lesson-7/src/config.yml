@@ -6,9 +6,16 @@
 # project_id: "330903cb-a235-45c5-acbd-b15fb40858e7"
 # api_url: "https://eu-de.ml.cloud.ibm.com"
 # parameters:
-#   decoding_method: greedy
+  # Conversing with granite-13b-chat-v2 values suggested here:
+  # https://dataplatform.cloud.ibm.com/docs/content/wsj/analyze-data/fm-models-ibm-chat.html?context=wx
+#   decoding_method: sample
 #   min_new_tokens: 1
-#   max_new_tokens: 500
+#   max_new_tokens: 900
+#   temperature: 0.2
+#   top_p: 0.9
+#   repeat_penalty: 1.05
+#   top_k: 40
+#   context_size: 8192
 
 ####################################################################################################
 # LLama.cpp configuration parameters
@@ -17,13 +24,14 @@
 # model: "llama-2-7b-chat-gguf"
 # transformers_path: "~/.cache/huggingface/transformers"
 # model_path: "llama-2-7b-chat-gguf/llama-2-7b-chat.Q2_K.gguf"
+# chat_format: "llama-2"
 # parameters:
-#   temperature: 0.1
+#   temperature: 0.8
 #   max_tokens: 200
 #   top_p: 0.9
 #   repeat_penalty: 1.1
 #   top_k: 40
-#   context_size: 1024
+#   context_size: 2048
 
 ####################################################################################################
 # Ollama configuration parameters
@@ -60,6 +68,12 @@ system_message: |
   Please ensure that your responses are socially unbiased and positive in nature.
   If a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct.
   If you don't know the answer to a question, please don't share false information and say you don't know the answer.
+
+# system_message: |
+#   You are Granite Chat, an AI language model developed by IBM. You are a cautious assistant. You carefully follow instructions.
+#   You are helpful and harmless and you follow ethical guidelines and promote positive behavior. You always respond to greetings
+#   (for example, hi, hello, g'day, morning, afternoon, evening, night, what's up, nice to meet you, sup) with "Hello! I am Granite
+#   Chat, created by IBM. How can I help you today?". Please do not say anything else and do not start a conversation.
 
 ####################################################################################################
 # DEBUG option

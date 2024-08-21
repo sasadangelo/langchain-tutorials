@@ -1,5 +1,7 @@
 from providers.provider import LLMProvider
 from langchain_community.llms import Ollama
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain_core.messages import SystemMessage
 
 DEFAULT_TEMPERATURE=0.8
 DEFAULT_MAX_TOKENS=128
@@ -12,11 +14,12 @@ class OllamaProvider(LLMProvider):
     def create_model(self):
         model_name = self.config['model']
         base_url = self.config['base_url']
+        system_message = self.config['system_message']
 
         # Set the default parameters
         parameters = {
-            'temperature': DEFAULT_TEMPERATURE,
             'max_tokens': DEFAULT_MAX_TOKENS,
+            'temperature': DEFAULT_TEMPERATURE,
             'top_p': DEFAULT_TOP_P,
             'top_k': DEFAULT_TOP_K,
             'repeat_penalty': DEFAULT_REPEAT_PENALTY,
@@ -31,8 +34,8 @@ class OllamaProvider(LLMProvider):
             print("****************************************************************")
             print("DEBUG.                                                          ")
             print("Model parameters::                                              ")
-            print("- temperature:", parameters['temperature'])
             print("- max_tokens:", parameters['max_tokens'])
+            print("- temperature:", parameters['temperature'])
             print("- top_p:", parameters['top_p'])
             print("- top_k:", parameters['top_k'])
             print("- repeat_penalty:", parameters['repeat_penalty'])
@@ -40,8 +43,7 @@ class OllamaProvider(LLMProvider):
             print("****************************************************************")
 
         # Create the model using the specified paremeters
-        self.model = Ollama(
-            model=model_name,
+        self.model = Ollama(model=model_name,
             base_url=base_url,
             temperature=parameters['temperature'],
             num_predict=parameters['max_tokens'],
@@ -50,7 +52,19 @@ class OllamaProvider(LLMProvider):
             repeat_penalty=parameters['repeat_penalty'],
             num_ctx=parameters['context_size'],
         )
+        self.chat_prompt_template = ChatPromptTemplate.from_messages(
+            [
+                SystemMessage(content=system_message),
+                MessagesPlaceholder(variable_name="messages"),
+            ]
+        )
 
-    def generate(self, prompt):
-        result = self.model.invoke(prompt)
+    def generate(self, messages):
+        # Generate the prompt with the template
+        formatted_prompt = self.chat_prompt_template.format(messages=messages)
+        print("****************************************************************")
+        print("Chat History + Question:")
+        print(formatted_prompt)
+        print("****************************************************************")
+        result = self.model.invoke(formatted_prompt)
         return result
