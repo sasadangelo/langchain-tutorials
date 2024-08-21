@@ -15,7 +15,7 @@ class OpenAIProvider(LLMProvider):
 
     def generate(self, messages):
         # Generate the prompt with the template
-        formatted_prompt = prompt_template.format(messages=messages)
+        formatted_prompt = self.chat_prompt_template.format(messages=messages)
         print("****************************************************************")
         print("Chat History + Question:")
         print(formatted_prompt)
