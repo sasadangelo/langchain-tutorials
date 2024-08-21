@@ -2,7 +2,6 @@ import argparse
 from dotenv import load_dotenv
 import yaml
 from providers.provider_factory import LLMProviderFactory
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.messages import SystemMessage, AIMessage, HumanMessage
 from langchain_community.chat_message_histories import ChatMessageHistory
 
@@ -27,16 +26,6 @@ config = load_config(args.config)
 
 # Initialize model based on config
 provider = LLMProviderFactory.get_provider(config)
-# Generate text using the model
-system_message = config['system_message']
-
-# Prompt template definition
-prompt_template = ChatPromptTemplate.from_messages(
-    [
-        SystemMessage(content=system_message),
-        MessagesPlaceholder(variable_name="messages"),
-    ]
-)
 
 # Initialize the conversation
 conversation = ChatMessageHistory()
@@ -50,7 +39,7 @@ try:
         conversation.add_message(HumanMessage(content=user_input))
 
         # Get the answer from the model
-        ai_response = provider.generate(prompt_template, conversation.messages)
+        ai_response = provider.generate(conversation.messages)
 
         # Add the AI message to the conversation
         conversation.add_message(AIMessage(content=ai_response))
