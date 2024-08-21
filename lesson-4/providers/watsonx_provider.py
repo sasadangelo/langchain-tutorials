@@ -14,11 +14,10 @@ class WatsonXProvider(LLMProvider):
             params=self.parameters
         )
 
-    def generate(self, prompt_template, messages):
+    def generate(self, messages):
         formatted_prompt = self.__format_messages(messages)
 
         # Generate the prompt with the template
-        # formatted_prompt = prompt_template.format(messages=messages)
         print("****************************************************************")
         print("Chat History + Question:")
         print(formatted_prompt)

@@ -28,13 +28,6 @@ provider = LLMProviderFactory.get_provider(config)
 # Generate text using the model
 system_message = config['system_message']
 
-# Prompt template definition
-prompt_template = ChatPromptTemplate.from_messages(
-    [
-        MessagesPlaceholder(variable_name="messages"),
-    ]
-)
-
 # Initialize the conversation
 messages = [{"role": "system", "content": system_message}]
 
@@ -48,7 +41,7 @@ try:
         messages.append(user_message)
 
         # Get the answer from the model
-        ai_response = provider.generate(prompt_template, messages)
+        ai_response = provider.generate(messages)
 
         # Add the AI reply to the conversation
         ai_message = {"role": "assistant", "content": ai_response}

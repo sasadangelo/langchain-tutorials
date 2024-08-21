@@ -10,7 +10,7 @@ class LLamaCppProvider(LLMProvider):
         transformers_path = os.path.expanduser(self.config['transformers_path'])
         self.model = Llama(model_path=transformers_path + "/" + model_path, chat_format=chat_format, n_ctx=512)
 
-    def generate(self, prompt_template, messages):
+    def generate(self, messages):
         pprint.pprint("****************************************************************")
         pprint.pprint("Chat History + Question:")
         pprint.pprint(messages)
