@@ -6,7 +6,7 @@
 # project_id: "330903cb-a235-45c5-acbd-b15fb40858e7"
 # api_url: "https://eu-de.ml.cloud.ibm.com"
 # parameters:
-#   decoding_method: greedy
+#   decoding_method: sample
 #   min_new_tokens: 1
 #   max_new_tokens: 500
 
@@ -17,6 +17,7 @@
 # model: "llama-2-7b-chat-gguf"
 # transformers_path: "~/.cache/huggingface/transformers"
 # model_path: "llama-2-7b-chat-gguf/llama-2-7b-chat.Q2_K.gguf"
+# chat_format: "llama-2"
 
 ####################################################################################################
 # Ollama configuration parameters
@@ -41,6 +42,12 @@ system_message: |
   Please ensure that your responses are socially unbiased and positive in nature.
   If a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct.
   If you don't know the answer to a question, please don't share false information.
+
+# system_message: |
+#   You are Granite Chat, an AI language model developed by IBM. You are a cautious assistant. You carefully follow instructions.
+#   You are helpful and harmless and you follow ethical guidelines and promote positive behavior. You always respond to greetings
+#   (for example, hi, hello, g'day, morning, afternoon, evening, night, what's up, nice to meet you, sup) with "Hello! I am Granite
+#   Chat, created by IBM. How can I help you today?". Please do not say anything else and do not start a conversation.
 
 ####################################################################################################
 # DEBUG option
