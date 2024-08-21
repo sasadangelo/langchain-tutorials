@@ -8,7 +8,7 @@
 # SPDX-License-Identifier: MIT
 from langchain.schema import (SystemMessage)
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain.memory import ConversationBufferMemory
+from langchain_community.chat_message_histories import ChatMessageHistory
 
 # This class represents a generic chatbot conversion.
 # It contains the chat history of the messages and the cost of each one.
@@ -28,14 +28,14 @@ class Conversation:
             ]
         )
 
-        # Inizialize the conversation memory
-        self.memory = ConversationBufferMemory()
+        # Inizialize the conversation
+        self.conversation = ChatMessageHistory()
 
     def add_message(self, message):
-        self.memory.chat_memory.add_message(message)
+        self.conversation.add_message(message)
 
     def get_messages(self):
-        return self.memory.chat_memory.messages
+        return self.conversation.messages
 
     def clear(self):
         self.__init()

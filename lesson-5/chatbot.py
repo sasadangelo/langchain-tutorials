@@ -4,7 +4,7 @@ import yaml
 from providers.provider_factory import LLMProviderFactory
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.messages import SystemMessage, AIMessage, HumanMessage
-from langchain.memory import ConversationBufferMemory
+from langchain_community.chat_message_histories import ChatMessageHistory
 
 def load_environment(env_file):
     load_dotenv(env_file)
@@ -38,8 +38,8 @@ prompt_template = ChatPromptTemplate.from_messages(
     ]
 )
 
-# Initialize the conversation memory
-memory = ConversationBufferMemory()
+# Initialize the conversation
+conversation = ChatMessageHistory()
 
 try:
     while True:
@@ -47,13 +47,13 @@ try:
         user_input = input("You: ")
 
         # Add the user message to the conversation
-        memory.chat_memory.add_message(HumanMessage(content=user_input))
+        conversation.add_message(HumanMessage(content=user_input))
 
         # Get the answer from the model
-        ai_response = provider.generate(prompt_template, memory.chat_memory.messages)
+        ai_response = provider.generate(prompt_template, conversation.messages)
 
         # Add the AI message to the conversation
-        memory.chat_memory.add_message(AIMessage(content=ai_response))
+        conversation.add_message(AIMessage(content=ai_response))
 
         # Print the AI reply
         print(f"Assistant: {ai_response}")
