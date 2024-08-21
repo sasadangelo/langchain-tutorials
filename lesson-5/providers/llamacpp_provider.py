@@ -11,7 +11,7 @@ class LLamaCppProvider(LLMProvider):
         chat_format = self.config['chat_format']
         self.system_message = self.config['system_message']
         transformers_path = os.path.expanduser(self.config['transformers_path'])
-        self.model = Llama(model_path=transformers_path + "/" + model_path, chat_format=chat_format, n_ctx=2048)
+        self.model = Llama(model_path=transformers_path + "/" + model_path, chat_format=chat_format, n_ctx=512)
 
     def generate(self, messages):
         format_messages = self.__format_messages(messages)
