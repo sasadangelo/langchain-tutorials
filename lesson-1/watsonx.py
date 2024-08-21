@@ -15,8 +15,8 @@ parameters = {
 # Configure the WatsonX LLM model
 llm = WatsonxLLM(
     model_id="ibm/granite-13b-chat-v2",
-    url="https://us-south.ml.cloud.ibm.com",
-    project_id="c189bcc3-b228-4a3d-b6f9-2817c587b178",
+    url="https://eu-de.ml.cloud.ibm.com",
+    project_id="330903cb-a235-45c5-acbd-b15fb40858e7",
     params=parameters
 )
 
