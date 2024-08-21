@@ -31,12 +31,11 @@ system_message = config['system_message']
 # Prompt template definition
 prompt_template = ChatPromptTemplate.from_messages(
     [
-        ("system", system_message),
         MessagesPlaceholder(variable_name="messages"),
     ]
 )
 
-# Initialize the messages list
+# Initialize the conversation
 messages = [{"role": "system", "content": system_message}]
 
 try:
