@@ -27,6 +27,18 @@ class OllamaProvider(LLMProvider):
         if 'parameters' in self.config:
             parameters.update(self.config['parameters'])
 
+        if self.config['debug'] == True:
+            print("****************************************************************")
+            print("DEBUG.                                                          ")
+            print("Model parameters::                                              ")
+            print("- temperature:", parameters['temperature'])
+            print("- max_tokens:", parameters['max_tokens'])
+            print("- top_p:", parameters['top_p'])
+            print("- top_k:", parameters['top_k'])
+            print("- repeat_penalty:", parameters['repeat_penalty'])
+            print("- context_size:", parameters['context_size'])
+            print("****************************************************************")
+
         # Create the model using the specified paremeters
         self.model = Ollama(
             model=model_name,

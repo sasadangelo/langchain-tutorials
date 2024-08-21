@@ -33,10 +33,10 @@ model: "llama3"
 base_url: http://localhost:11434
 parameters:
   temperature: 0.8
-  max_tokens: 200
+  max_tokens: 128
+  top_k: 40
   top_p: 0.9
   repeat_penalty: 1.1
-  top_k: 40
   context_size: 8192
 
 ####################################################################################################
@@ -48,6 +48,9 @@ parameters:
 # model: "gpt-4"
 # parameters:
 #   temperature: 1
+#   max_tokens: -1 # -1 Only works on ChatGPT
+#   top_p: 0.9
+#   repeat_penalty: 1.1
 
 ####################################################################################################
 # System Message Prompt
