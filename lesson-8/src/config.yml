@@ -36,16 +36,16 @@
 ####################################################################################################
 # Ollama configuration parameters
 ####################################################################################################
-# provider: "ollama"
-# model: "llama3"
-# base_url: http://localhost:11434
-# parameters:
-#   temperature: 0.8
-#   max_tokens: 200
-#   top_k: 40
-#   top_p: 0.9
-#   repeat_penalty: 1.1
-#   context_size: 8192
+provider: "ollama"
+model: "llama3"
+base_url: http://localhost:11434
+parameters:
+  temperature: 0.8
+  max_tokens: 200
+  top_k: 40
+  top_p: 0.9
+  repeat_penalty: 1.1
+  context_size: 8192
 
 ####################################################################################################
 # OpenAI configuration parameters
@@ -78,10 +78,14 @@ system_message: |
 ####################################################################################################
 # Memory Strategy
 ####################################################################################################
-# chat_history_memory: buffer
+chat_history_memory: buffer
 
-chat_history_memory: window
-chat_history_memory_window: 3
+# chat_history_memory: window
+# chat_history_memory_window: 3
+
+# At the moment, this memory strategy doesn't work with llamacpp. The reason is that this provider is managed by the LLama class in the
+# llama_cpp_python library. To overcome this limitation the provider should use the LLamaCpp class in the langchain_community.llms package.
+# chat_history_memory: summary
 
 ####################################################################################################
 # DEBUG option
