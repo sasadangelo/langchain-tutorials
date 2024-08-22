@@ -23,7 +23,7 @@ python3 main.py
 
 ## How to run "Hello LLM" with WatsonX
 
-To run the "Hello LLM" with WatsonX you need to copy the `.env_sample` file in `.env` and add your IBM Cloud API Key to the `WATSONX_APIKEY` variable. 
+To run the "Hello LLM" with WatsonX you need to copy the `.env_sample` file in `.env` and add your IBM Cloud API Key to the `WATSONX_APIKEY` variable.
 
 Make sure in the `config.yml` only the following rows are uncommented (enter the project id):
 ```
@@ -39,12 +39,12 @@ parameters:
 
 Type the following command:
 ```
-python3 main.py
+python3 main.py -c config.yml
 ```
 
 ## How to run "Hello LLM" with OpenAI
 
-To run the "Hello LLM" with WatsonX you need to copy the `.env_sample`file in `.env` and add your IBM Cloud API Key to the `OPENAI_API_KEY` variable. 
+To run the "Hello LLM" with WatsonX you need to copy the `.env_sample`file in `.env` and add your IBM Cloud API Key to the `OPENAI_API_KEY` variable.
 
 Make sure in the `config.yml` only the following rows are uncommented (enter the project id):
 ```
@@ -54,7 +54,7 @@ model: "gpt-3.5-turbo"
 
 Type the following command:
 ```
-python3 main.py
+python3 main.py -c config.yml
 ```
 
 ## How to run "Hello LLM" with LLama_cpp
@@ -70,5 +70,5 @@ chat_format: "llama-2"
 
 Type the following command:
 ```
-python3 main.py
+python3 main.py -c config.yml
 ```

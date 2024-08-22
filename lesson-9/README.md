@@ -1,14 +1,21 @@
-# Lesson 8: Memory Management during the conversation
+# Lesson 9: DataWaeve CLI and Qdrant
 
-In this lesson we will improve our Chatbot allowing to use different memory strategy. Until lesson 7 the chat history grows indefinitively and this leads to a memory issue when the chat history is larger than the context size. To manage this situation Lang Chai supports different strategy:
-- no management at all with ConversationBufferMemory
-- keep only the recent N messages (windows) with ConversationBufferWindowMemory
+In this lesson we will introduce the DataWaeve command line. This tool will be used to grab data from different sources (i.e. pdf, wikipedia, etc) and store it in a QDrant vector database. This change will be useful in the next lesson to implement RAG.
 
 ## How to run the Chatbot
 
 To run the chatbot type the following command:
 
 ```
-cd lesson-8/src
-python3 app.py
+cd lesson-p/src
+python3 chatterpy_app.py -c config.yml
+```
+
+## How to run the DataWaeve CLI
+
+To run the datawaeve cli type the following command:
+
+```
+cd lesson-9/src
+python3 datawaeve_app.py -c config.yml [--pdf <pdf file name>] [--wikipedia <wikipedia url>]
 ```
