@@ -11,6 +11,7 @@ These tutorials will help you to build, step by step, a chatbot using Large Lang
 * [Lesson 7: Configure generation parameters](lesson-7/README.md)
 * [Lesson 8: Memory Management during the conversation](lesson-8/README.md)
 * [Lesson 9: DataWaeve CLI and Qdrant](lesson-9/README.md)
+* [Lesson 10: RAG implementation](lesson-10/README.md)
 
 ## Prerequisites
 
