@@ -12,7 +12,7 @@ from langchain_core.messages import AIMessage, HumanMessage
 from providers.provider_factory import LLMProviderFactory
 from chatbot.conversation import Conversation
 from rag.rag import RAG
-from prompts.prompt import Prompt
+from prompts.prompt_formatter_factory import PromptFormatterFactory
 from langchain_core.messages import SystemMessage
 
 class ChatBOT:
@@ -23,16 +23,18 @@ class ChatBOT:
         self.provider = LLMProviderFactory.get_provider(config)
         self.rag = RAG(config)
         self.system_message = SystemMessage(content=self.config['system_message'])
-
+        self.prompt_formatter = PromptFormatterFactory.get_prompt_formatter(self.config)
 
     # Once the user insert the question, this method is called to generate the answer.
     def get_answer(self, question):
         # Add the user message to the list of users
         user_message = HumanMessage(content=question)
         # If RAG is enabled get the context from the RAG subsytem
-        context = self.rag.get_context(question) if self.rag.is_enabled else None
+        context = self.rag.get_context(question) if self.rag.is_enabled() else None
+        print("RAG enabled?", self.rag.is_enabled())
+        print("Context: ", context)
         # Create the prompt to pass to the model
-        prompt = Prompt.get_prompt(self.config, context, self.system_message, self.conversation.get_chat_history_messages(), user_message)
+        prompt = self.prompt_formatter.get_prompt(context, self.system_message, self.conversation.get_chat_history_messages(), user_message)
         # Get the answer from the model
         ai_message_text = self.provider.generate(prompt)
         ai_message = AIMessage(content=ai_message_text)

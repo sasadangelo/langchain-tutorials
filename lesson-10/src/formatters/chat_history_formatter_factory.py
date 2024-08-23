@@ -3,12 +3,12 @@ from formatters.plain_chat_history_formatter import PlainChatHistoryFormatter
 from formatters.granite_chat_history_formatter import GraniteChatHistoryFormatter
 from formatters.llama2_chat_history_formatter import LLama2ChatHistoryFormatter
 
-DEFAULT_CHAT_HISTORY_FORMATTER="plain"
+DEFAULT_PROMPT_FORMATTER="plain"
 
 class ChatHistoryFormatterFactory:
     @staticmethod
     def get_chat_history_formatter(config) -> ChatHistoryFormatter:
-        chat_formatter_type = config.get('chat_history_formatter', DEFAULT_CHAT_HISTORY_FORMATTER)
+        chat_formatter_type = config.get('prompt_formatter', DEFAULT_PROMPT_FORMATTER)
 
         if chat_formatter_type == 'plain':
             return PlainChatHistoryFormatter()

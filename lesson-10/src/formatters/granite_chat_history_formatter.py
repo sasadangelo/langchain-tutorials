@@ -20,7 +20,7 @@ class GraniteChatHistoryFormatter(ChatHistoryFormatter):
     def format(self, system_message, chat_history_messages):
         # Concatenate the user message to the chat history to create a context for the LLM
         chat_messages = [system_message] + chat_history_messages
-        return self.__granite_v2_prompt(system_message, chat_messages)
+        return self.__granite_v2_prompt(chat_messages)
 
     # This method creates the Granite v2 prompt for the model starting from a message list like this:
     #

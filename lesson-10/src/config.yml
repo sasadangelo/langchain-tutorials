@@ -3,7 +3,8 @@
 ####################################################################################################
 # provider: "watsonx"
 # model: "ibm/granite-13b-chat-v2"
-# project_id: "330903cb-a235-45c5-acbd-b15fb40858e7"
+# project_id: "330903cb-a235-45c5-acbd-b15fb40858e7" # Angelo account
+# project_id: "9c1b9ea0-4cdf-4fef-b4d9-5a8902ec817e" # Rome Team account
 # api_url: "https://eu-de.ml.cloud.ibm.com"
 # parameters:
   # Conversing with granite-13b-chat-v2 values suggested here:
@@ -16,7 +17,7 @@
 #   repeat_penalty: 1.05
 #   top_k: 40
 #   context_size: 8192
-#chat_history_formatter: granite
+# chat_history_formatter: granite
 
 ####################################################################################################
 # LLama.cpp configuration parameters
