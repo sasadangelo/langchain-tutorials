@@ -10,6 +10,7 @@ These tutorials will help you to build, step by step, a chatbot using Large Lang
 * [Lesson 6: an Object Oriented ChatBOT with Lang Chain](lesson-6/README.md)
 * [Lesson 7: Configure generation parameters](lesson-7/README.md)
 * [Lesson 8: Memory Management during the conversation](lesson-8/README.md)
+* [Lesson 9: DataWaeve CLI and Qdrant](lesson-9/README.md)
 
 ## Prerequisites
 
