@@ -17,7 +17,7 @@
 #   repeat_penalty: 1.05
 #   top_k: 40
 #   context_size: 8192
-# chat_history_formatter: granite
+# prompt_formatter: granite
 
 ####################################################################################################
 # LLama.cpp configuration parameters
@@ -34,7 +34,7 @@
 #   repeat_penalty: 1.1
 #   top_k: 40
 #   context_size: 2048
-# chat_history_formatter: plain
+# prompt_formatter: plain
 
 ####################################################################################################
 # Ollama configuration parameters
@@ -49,7 +49,7 @@ parameters:
   top_p: 0.9
   repeat_penalty: 1.1
   context_size: 8192
-chat_history_formatter: plain
+prompt_formatter: plain
 
 ####################################################################################################
 # OpenAI configuration parameters
@@ -63,6 +63,7 @@ chat_history_formatter: plain
 #   max_tokens: -1 # -1 Only works on ChatGPT
 #   top_p: 0.9
 #   repeat_penalty: 1.1
+# prompt_formatter: plain
 
 ####################################################################################################
 # System Message Prompt
