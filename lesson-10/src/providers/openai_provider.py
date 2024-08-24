@@ -1,5 +1,5 @@
 from providers.provider import LLMProvider
-from langchain_openai import ChatOpenAI
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.messages import SystemMessage
 
@@ -39,6 +39,7 @@ class OpenAIProvider(LLMProvider):
                                 model_name=model_name,
                                 model_kwargs={"top_p": parameters['top_p'],
                                               "frequency_penalty": parameters['repeat_penalty']})
+        self.embeddings = OpenAIEmbeddings(model=model_name)
         self.chat_prompt_template = ChatPromptTemplate.from_messages(
             [
                 SystemMessage(content=system_message),
@@ -46,15 +47,11 @@ class OpenAIProvider(LLMProvider):
             ]
         )
 
-    def generate(self, chat_history_messages, user_message):
-        # Concatenate the user message to the chat history to create a context for the LLM
-        chat_messages = chat_history_messages + [user_message]
-        # Generate the prompt with the template
-        formatted_prompt = self.chat_prompt_template.format(messages=chat_messages)
+    def generate(self, prompt):
         if self.config['debug'] == True:
             print("****************************************************************")
             print("Prompt:")
-            print(formatted_prompt)
+            print(prompt)
             print("****************************************************************")
-        result = self.model.invoke(formatted_prompt)
+        result = self.model.invoke(prompt)
         return result
