@@ -1,23 +1,23 @@
 ####################################################################################################
 # WatsonX configuration parameters
 ####################################################################################################
-provider: "watsonx"
-model: "ibm/granite-13b-chat-v2"
+# provider: "watsonx"
+# model: "ibm/granite-13b-chat-v2"
 # project_id: "330903cb-a235-45c5-acbd-b15fb40858e7" # Angelo account
-project_id: "9c1b9ea0-4cdf-4fef-b4d9-5a8902ec817e" # Rome Team account
-api_url: "https://eu-de.ml.cloud.ibm.com"
-parameters:
+# project_id: "9c1b9ea0-4cdf-4fef-b4d9-5a8902ec817e" # Rome Team account
+# api_url: "https://eu-de.ml.cloud.ibm.com"
+# parameters:
   # Conversing with granite-13b-chat-v2 values suggested here:
   # https://dataplatform.cloud.ibm.com/docs/content/wsj/analyze-data/fm-models-ibm-chat.html?context=wx
-  decoding_method: sample
-  min_new_tokens: 1
-  max_new_tokens: 900
-  temperature: 0.2
-  top_p: 0.9
-  repeat_penalty: 1.05
-  top_k: 40
-  context_size: 8192
-prompt_formatter: granite
+#   decoding_method: sample
+#   min_new_tokens: 1
+#   max_new_tokens: 900
+#   temperature: 0.2
+#   top_p: 0.9
+#   repeat_penalty: 1.05
+#   top_k: 40
+#   context_size: 8192
+# prompt_formatter: granite
 
 ####################################################################################################
 # LLama.cpp configuration parameters
@@ -39,17 +39,17 @@ prompt_formatter: granite
 ####################################################################################################
 # Ollama configuration parameters
 ####################################################################################################
-# provider: "ollama"
-# model: "llama3"
-# base_url: http://localhost:11434
-# parameters:
-#   temperature: 0.8
-#   max_tokens: 128
-#   top_k: 40
-#   top_p: 0.9
-#   repeat_penalty: 1.1
-#   context_size: 8192
-# prompt_formatter: plain
+provider: "ollama"
+model: "llama3"
+base_url: http://localhost:11434
+parameters:
+  temperature: 0.8
+  max_tokens: 128
+  top_k: 40
+  top_p: 0.9
+  repeat_penalty: 1.1
+  context_size: 8192
+prompt_formatter: plain
 
 ####################################################################################################
 # OpenAI configuration parameters
