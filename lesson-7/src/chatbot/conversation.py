@@ -6,8 +6,6 @@
 # Maintainer: Salvatore D'Angelo sasadangelo@gmail.com
 #
 # SPDX-License-Identifier: MIT
-from langchain.schema import (SystemMessage)
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_community.chat_message_histories import ChatMessageHistory
 
 # This class represents a generic chatbot conversion.
@@ -17,17 +15,6 @@ class Conversation:
         self.__init(config)
 
     def __init(self, config):
-        # Generate text using the model
-        system_message = config['system_message']
-
-        # Definition of the prompt template
-        self.prompt_template = ChatPromptTemplate.from_messages(
-            [
-                SystemMessage(content=system_message),
-                MessagesPlaceholder(variable_name="messages"),
-            ]
-        )
-
         # Inizialize the conversation
         self.conversation = ChatMessageHistory()
 
