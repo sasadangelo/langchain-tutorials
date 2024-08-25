@@ -31,8 +31,6 @@ class ChatBOT:
         user_message = HumanMessage(content=question)
         # If RAG is enabled get the context from the RAG subsytem
         context = self.rag.get_context(question) if self.rag.is_enabled() else None
-        print("RAG enabled?", self.rag.is_enabled())
-        print("Context: ", context)
         # Create the prompt to pass to the model
         prompt = self.prompt_formatter.get_prompt(context, self.system_message, self.conversation.get_chat_history_messages(), user_message)
         # Get the answer from the model
