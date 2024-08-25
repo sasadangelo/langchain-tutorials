@@ -1,7 +1,5 @@
 from providers.provider import LLMProvider
-from langchain_openai import ChatOpenAI, OpenAIEmbeddings
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_core.messages import SystemMessage
+from langchain_openai import ChatOpenAI
 
 DEFAULT_TEMPERATURE=0.8
 DEFAULT_MAX_TOKENS=-1 # -1 Only works on ChatGPT
@@ -11,7 +9,6 @@ DEFAULT_REPEAT_PENALTY=1.1
 class OpenAIProvider(LLMProvider):
     def create_model(self):
         model_name = self.config['model']
-        system_message = self.config['system_message']
 
         # Set the default parameters
         parameters = {
@@ -39,13 +36,6 @@ class OpenAIProvider(LLMProvider):
                                 model_name=model_name,
                                 model_kwargs={"top_p": parameters['top_p'],
                                               "frequency_penalty": parameters['repeat_penalty']})
-        self.embeddings = OpenAIEmbeddings(model=model_name)
-        self.chat_prompt_template = ChatPromptTemplate.from_messages(
-            [
-                SystemMessage(content=system_message),
-                MessagesPlaceholder(variable_name="messages"),
-            ]
-        )
 
     def generate(self, prompt):
         if self.config['debug'] == True:

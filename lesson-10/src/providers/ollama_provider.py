@@ -1,5 +1,4 @@
 from providers.provider import LLMProvider
-from langchain_community.embeddings import OllamaEmbeddings
 from langchain_community.llms import Ollama
 
 DEFAULT_TEMPERATURE=0.8
@@ -13,7 +12,7 @@ class OllamaProvider(LLMProvider):
     def create_model(self):
         model_name = self.config['model']
         base_url = self.config['base_url']
-        system_message = self.config['system_message']
+        #system_message = self.config['system_message']
 
         # Set the default parameters
         parameters = {
@@ -50,7 +49,6 @@ class OllamaProvider(LLMProvider):
             repeat_penalty=parameters['repeat_penalty'],
             num_ctx=parameters['context_size'],
         )
-        self.embeddings = OllamaEmbeddings(model=model_name)
 
     def generate(self, prompt):
         if self.config['debug'] == True:

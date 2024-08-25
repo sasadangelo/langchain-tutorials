@@ -22,34 +22,34 @@
 ####################################################################################################
 # LLama.cpp configuration parameters
 ####################################################################################################
-# provider: "llamacpp"
-# model: "llama-2-7b-chat-gguf"
-# transformers_path: "~/.cache/huggingface/transformers"
-# model_path: "llama-2-7b-chat-gguf/llama-2-7b-chat.Q2_K.gguf"
-# chat_format: "llama-2"
-# parameters:
-#   temperature: 0.8
-#   max_tokens: 200
-#   top_p: 0.9
-#   repeat_penalty: 1.1
-#   top_k: 40
-#   context_size: 2048
-# prompt_formatter: plain
+provider: "llamacpp"
+model: "llama-2-7b-chat-gguf"
+transformers_path: "~/.cache/huggingface/transformers"
+model_path: "llama-2-7b-chat-gguf/llama-2-7b-chat.Q2_K.gguf"
+chat_format: "llama-2"
+parameters:
+  temperature: 0.8
+  max_tokens: 200
+  top_p: 0.9
+  repeat_penalty: 1.1
+  top_k: 40
+  context_size: 2048
+prompt_formatter: plain
 
 ####################################################################################################
 # Ollama configuration parameters
 ####################################################################################################
-provider: "ollama"
-model: "llama3"
-base_url: http://localhost:11434
-parameters:
-  temperature: 0.8
-  max_tokens: 200
-  top_k: 40
-  top_p: 0.9
-  repeat_penalty: 1.1
-  context_size: 8192
-prompt_formatter: plain
+# provider: "ollama"
+# model: "llama3"
+# base_url: http://localhost:11434
+# parameters:
+#   temperature: 0.8
+#   max_tokens: 200
+#   top_k: 40
+#   top_p: 0.9
+#   repeat_penalty: 1.1
+#   context_size: 8192
+# prompt_formatter: plain
 
 ####################################################################################################
 # OpenAI configuration parameters
@@ -95,11 +95,17 @@ chat_history_memory: buffer
 ####################################################################################################
 # RAG
 ####################################################################################################
-rag_enabled: false
+rag_enabled: true
 rag_top_k_chunks: 10
 
 qdrant_path: ~/.qdrant
 qdrant_collection: mycollection
+
+embedding_provider: "ollama"
+embedding_model: "llama3"
+embedding_vector_size: 4096
+# embedding_distance_function allowed values: Cosine, Euclid, Dot
+embedding_distance_function: Cosine
 
 ####################################################################################################
 # Data Weave CLI

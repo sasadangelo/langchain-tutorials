@@ -1,14 +1,13 @@
 from typing import Union
 from providers.provider import LLMProvider
 from langchain_ibm import WatsonxLLM
-from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 
 class WatsonXProvider(LLMProvider):
     def create_model(self):
         self.url = self.config["api_url"]
         self.project_id = self.config["project_id"]
         self.parameters = self.config.get("parameters", {})
-        self.system_message = self.config['system_message']
+        #self.system_message = self.config['system_message']
 
         self.model = WatsonxLLM(
             model_id=self.config["model"],
