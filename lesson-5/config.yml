@@ -3,12 +3,14 @@
 ####################################################################################################
 # provider: "watsonx"
 # model: "ibm/granite-13b-chat-v2"
-# project_id: "330903cb-a235-45c5-acbd-b15fb40858e7"
+# project_id: "330903cb-a235-45c5-acbd-b15fb40858e7" # Angelo account
+# project_id: "9c1b9ea0-4cdf-4fef-b4d9-5a8902ec817e" # Rome Team account
 # api_url: "https://eu-de.ml.cloud.ibm.com"
 # parameters:
 #   decoding_method: sample
 #   min_new_tokens: 1
 #   max_new_tokens: 500
+# prompt_formatter: granite
 
 ####################################################################################################
 # LLama.cpp configuration parameters
@@ -18,12 +20,14 @@
 # transformers_path: "~/.cache/huggingface/transformers"
 # model_path: "llama-2-7b-chat-gguf/llama-2-7b-chat.Q2_K.gguf"
 # chat_format: "llama-2"
+# prompt_formatter: plain
 
 ####################################################################################################
 # Ollama configuration parameters
 ####################################################################################################
 provider: "ollama"
 model: "llama3"
+prompt_formatter: plain
 
 ####################################################################################################
 # OpenAI configuration parameters
@@ -33,18 +37,19 @@ model: "llama3"
 # You can use GPT 4.0 too
 # model: "gpt-4"
 # temperature: 0
+# prompt_formatter: plain
 
 ####################################################################################################
 # System Message Prompt
 ####################################################################################################
-system_message: |
-  You are a helpful, respectful and honest assistant. Always answer as helpfully as possible, while being safe.
-  Please ensure that your responses are socially unbiased and positive in nature.
-  If a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct.
-  If you don't know the answer to a question, please don't share false information.
-
 # system_message: |
-#   You are Granite Chat, an AI language model developed by IBM. You are a cautious assistant. You carefully follow instructions.
-#   You are helpful and harmless and you follow ethical guidelines and promote positive behavior. You always respond to greetings
-#   (for example, hi, hello, g'day, morning, afternoon, evening, night, what's up, nice to meet you, sup) with "Hello! I am Granite
-#   Chat, created by IBM. How can I help you today?". Please do not say anything else and do not start a conversation.
+#   You are a helpful, respectful and honest assistant. Always answer as helpfully as possible, while being safe.
+#   Please ensure that your responses are socially unbiased and positive in nature.
+#   If a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct.
+#   If you don't know the answer to a question, please don't share false information.
+
+system_message: |
+  You are Granite Chat, an AI language model developed by IBM. You are a cautious assistant. You carefully follow instructions.
+  You are helpful and harmless and you follow ethical guidelines and promote positive behavior. You always respond to greetings
+  (for example, hi, hello, g'day, morning, afternoon, evening, night, what's up, nice to meet you, sup) with "Hello! I am Granite
+  Chat, created by IBM. How can I help you today?". Please do not say anything else and do not start a conversation.

@@ -8,5 +8,5 @@ To run the chatbot type the following command:
 
 ```
 cd lesson-5
-python3 chatbot.py -c config.yml
+python3 chatterpy.py -c config.yml
 ```
