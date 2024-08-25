@@ -14,34 +14,10 @@ class WatsonXProvider(LLMProvider):
             params=self.parameters
         )
 
-    def generate(self, messages):
-        formatted_prompt = self.__format_messages(messages)
-
-        # Generate the prompt with the template
+    def generate(self, prompt):
         print("****************************************************************")
-        print("Chat History + Question:")
-        print(formatted_prompt)
+        print("Prompt:")
+        print(prompt)
         print("****************************************************************")
 
-        return self.model.invoke(formatted_prompt)
-
-    # Convert the prompt messages list format
-    def __format_messages(self, messages) -> str:
-        # Construct the prompt by iterating through the messages
-        prompt = []
-        for message in messages:
-            print(message)
-            if message["role"] == "system":
-                # Add the system message
-                prompt.append("<|system|>")
-                prompt.append(message['content'])
-            elif message["role"] == "user":
-                # Add user question
-                prompt.append("<|user|>")
-                prompt.append(message['content'])
-            elif message["role"] == "assistant":
-                # Add AI reply
-                prompt.append("<|assistant|>")
-                prompt.append(message['content'])
-
-        return '\n'.join(prompt)
+        return self.model.invoke(prompt)

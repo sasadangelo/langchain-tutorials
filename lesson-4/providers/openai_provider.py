@@ -13,13 +13,11 @@ class OpenAIProvider(LLMProvider):
             ]
         )
 
-    def generate(self, messages):
-        # Generate the prompt with the template
-        formatted_prompt = self.chat_prompt_template.format(messages=messages)
+    def generate(self, prompt):
         print("****************************************************************")
-        print("Chat History + Question:")
-        print(formatted_prompt)
+        print("Prompt:")
+        print(prompt)
         print("****************************************************************")
 
-        result = self.model.invoke(formatted_prompt)
+        result = self.model.invoke(prompt)
         return result
