@@ -3,12 +3,14 @@
 ####################################################################################################
 # provider: "watsonx"
 # model: "ibm/granite-13b-chat-v2"
-# project_id: "330903cb-a235-45c5-acbd-b15fb40858e7"
+# project_id: "330903cb-a235-45c5-acbd-b15fb40858e7" # Angelo account
+# project_id: "9c1b9ea0-4cdf-4fef-b4d9-5a8902ec817e" # Rome Team account
 # api_url: "https://eu-de.ml.cloud.ibm.com"
 # parameters:
 #   decoding_method: sample
 #   min_new_tokens: 1
 #   max_new_tokens: 500
+# prompt_formatter: granite
 
 ####################################################################################################
 # LLama.cpp configuration parameters
@@ -17,13 +19,15 @@
 # model: "llama-2-7b-chat-gguf"
 # transformers_path: "~/.cache/huggingface/transformers"
 # model_path: "llama-2-7b-chat-gguf/llama-2-7b-chat.Q2_K.gguf"
-# chat_format: "llama-2"
+# chat_format: "llama-2"
+# prompt_formatter: plain
 
 ####################################################################################################
 # Ollama configuration parameters
 ####################################################################################################
 provider: "ollama"
 model: "llama3"
+prompt_formatter: plain
 
 ####################################################################################################
 # OpenAI configuration parameters
@@ -33,6 +37,7 @@ model: "llama3"
 # You can use GPT 4.0 too
 # model: "gpt-4"
 # temperature: 0
+# prompt_formatter: plain
 
 ####################################################################################################
 # System Message Prompt
