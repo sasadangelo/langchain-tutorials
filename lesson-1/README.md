@@ -28,7 +28,7 @@ python3 watsonx.py
 
 ## How to run "Hello LLM" with OpenAI
 
-To run the "Hello LLM" with WatsonX you need to copy the `.env_sample`file in `.env` and add your IBM Cloud API Key to the `OPENAI_API_KEY` variable. Type the following command:
+To run the "Hello LLM" with WatsonX you need to copy the `.env_sample`file in `.env` and add your OPENAI API Key to the `OPENAI_API_KEY` variable. If you run a local OpenAI server put a dummy key. Type the following command:
 ```
 python3 myopenai.py
 ```
