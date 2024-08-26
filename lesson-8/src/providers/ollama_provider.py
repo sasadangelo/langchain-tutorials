@@ -1,7 +1,5 @@
 from providers.provider import LLMProvider
 from langchain_community.llms import Ollama
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_core.messages import SystemMessage
 
 DEFAULT_TEMPERATURE=0.8
 DEFAULT_MAX_TOKENS=128
@@ -14,7 +12,6 @@ class OllamaProvider(LLMProvider):
     def create_model(self):
         model_name = self.config['model']
         base_url = self.config['base_url']
-        system_message = self.config['system_message']
 
         # Set the default parameters
         parameters = {
@@ -32,7 +29,6 @@ class OllamaProvider(LLMProvider):
 
         if self.config['debug'] == True:
             print("****************************************************************")
-            print("DEBUG.                                                          ")
             print("Model parameters::                                              ")
             print("- max_tokens:", parameters['max_tokens'])
             print("- temperature:", parameters['temperature'])
@@ -52,21 +48,12 @@ class OllamaProvider(LLMProvider):
             repeat_penalty=parameters['repeat_penalty'],
             num_ctx=parameters['context_size'],
         )
-        self.chat_prompt_template = ChatPromptTemplate.from_messages(
-            [
-               SystemMessage(content=system_message),
-               MessagesPlaceholder(variable_name="messages"),
-           ]
-        )
 
-    def generate(self, chat_history_messages, user_message):
-        # Concatenate the user message to the chat history to create a context for the LLM
-        chat_messages = chat_history_messages + [user_message]
-        # Generate the prompt with the template
-        formatted_prompt = self.chat_prompt_template.format(messages=chat_messages)
-        print("****************************************************************")
-        print("Chat History + Question:")
-        print(formatted_prompt)
-        print("****************************************************************")
-        result = self.model.invoke(formatted_prompt)
+    def generate(self, prompt):
+        if self.config['debug'] == True:
+            print("****************************************************************")
+            print("Prompt:")
+            print(prompt)
+            print("****************************************************************")
+        result = self.model.invoke(prompt)
         return result
