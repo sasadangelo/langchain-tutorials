@@ -121,6 +121,12 @@ document_chunk_overlap: 0
 # qdrant_path: ~/.qdrant
 # qdrant_collection: mycollection
 
+# embedding_provider: "ollama"
+# embedding_model: "llama3"
+# embedding_vector_size: 4096
+# embedding_distance_function allowed values: Cosine, Euclid, Dot
+# embedding_distance_function: Cosine
+
 ####################################################################################################
 # DEBUG option
 ####################################################################################################

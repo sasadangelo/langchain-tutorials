@@ -8,7 +8,7 @@ To run the chatbot in UI mode, type the following command:
 
 ```
 cd lesson-11/src
-python3 chatterpy_gui.py -c config.yml
+streamlist run chatterpy_gui.py
 ```
 
 To run the chatbot in text mode, type the following command:

@@ -1,11 +1,7 @@
 import argparse
 import yaml
-from dotenv import load_dotenv
 from datasources.pdf_source import PDFSource
 from datawaeve.datawaeve_cli import DataWeaveCLI
-
-def load_environment(env_file):
-    load_dotenv(env_file)
 
 def load_config(config_file):
     with open(config_file, 'r') as f:
@@ -16,14 +12,11 @@ def load_config(config_file):
 def main():
     parser = argparse.ArgumentParser(description="DataWeave CLI: Populate a vector database with data coming from different sources.")
     parser.add_argument('--config', '-c', type=str, required=True, help='Path to the config file')
-    parser.add_argument('--env', '-e', type=str, required=False, default=".env", help='Path to the environment file')
     parser.add_argument('--pdf', type=str, action='append', required=False, help='Specify the path of a PDF file or a folder containing multiple PDF files.')
     parser.add_argument('--wikipedia', type=str, action='append', required=False, help='Specify the URL of a Wikipedia page.')
 
     args = parser.parse_args()
 
-    # Load environment variables
-    load_environment(args.env)
     # Load the configuration file
     config = load_config(args.config)
 
