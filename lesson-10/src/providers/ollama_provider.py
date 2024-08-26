@@ -12,7 +12,6 @@ class OllamaProvider(LLMProvider):
     def create_model(self):
         model_name = self.config['model']
         base_url = self.config['base_url']
-        #system_message = self.config['system_message']
 
         # Set the default parameters
         parameters = {

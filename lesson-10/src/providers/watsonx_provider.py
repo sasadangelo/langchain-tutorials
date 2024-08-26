@@ -7,7 +7,6 @@ class WatsonXProvider(LLMProvider):
         self.url = self.config["api_url"]
         self.project_id = self.config["project_id"]
         self.parameters = self.config.get("parameters", {})
-        #self.system_message = self.config['system_message']
 
         self.model = WatsonxLLM(
             model_id=self.config["model"],

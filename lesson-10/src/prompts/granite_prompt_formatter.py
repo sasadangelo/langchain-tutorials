@@ -1,15 +1,14 @@
 from typing import Union
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.prompts import PromptTemplate
 from prompts.prompt_formatter import PromptFormatter
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 
 class GranitePromptFormatter(PromptFormatter):
     PROMPT_TEMPLATE = (
-    "If available, use the following pieces of context enclosed by triple backquote to answer the question at the end."
+    "If available, use the following pieces of context enclosed by triple backquote to answer the question at the end.\n"
     "Don't mention the word 'context' in the answer.\n\n"
     "Context:\n"
-    "```"
+    "```\n"
     "{context}\n"
     "```\n\n"
     "Question: {user_message}\n"
@@ -36,15 +35,15 @@ class GranitePromptFormatter(PromptFormatter):
     # It returns a string like this:
     #
     # <|system|>
-    # {your_system_message}
+    # {system_message}
     # <|user|>
     # {user_message_1}
     # <|assistant|>
-    # {model_reply_1}
+    # {assistant_message_1}
     # <|user|>
     # {user_message_2}
     # <|assistant|>
-    # {model_reply_1}
+    # {assistant_message_1}
     # <|user|>
     # {user_message_3}
     def __granite_v2_prompt(self, chat_messages) -> str:
