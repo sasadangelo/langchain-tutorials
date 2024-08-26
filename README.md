@@ -12,6 +12,7 @@ These tutorials will help you to build, step by step, a chatbot using Large Lang
 * [Lesson 8: Memory Management during the conversation](lesson-8/README.md)
 * [Lesson 9: DataWaeve CLI and Qdrant](lesson-9/README.md)
 * [Lesson 10: RAG implementation](lesson-10/README.md)
+* [Lesson 11: Add UI interface with streamlit](lesson-11/README.md)
 
 ## Prerequisites
 
