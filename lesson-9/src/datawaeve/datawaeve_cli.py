@@ -6,9 +6,9 @@ from datasources.wikipedia_source import WikipediaSource
 from langchain.text_splitter import TokenTextSplitter
 from datasources.pdf_source import PDFSource
 from databases.qdrant_db import QdrantDatabase
-from providers.provider_factory import LLMProviderFactory
+from embeddings.embedding_provider_factory import EmbeddingProviderFactory
 
-# CLI class to handle the entire process
+# DataWaeve CLI class
 class DataWeaveCLI:
     def __init__(self, config):
         self.config = config
@@ -20,9 +20,9 @@ class DataWeaveCLI:
             text = source.get_text()
             text_splitter = TokenTextSplitter(chunk_size=100, chunk_overlap=0)
             chunks = text_splitter.split_text(text)
-            self.db = QdrantDatabase(self.config)
-            provider = LLMProviderFactory.get_provider(self.config)
-            self.db.store(chunks, provider.embeddings)
+            provider = EmbeddingProviderFactory.get_embedding_provider(self.config)
+            self.db = QdrantDatabase(self.config, provider.embeddings)
+            self.db.store(chunks)
 
     def load_pdf_sources(self, pdf_paths):
       for pdf_path in pdf_paths:

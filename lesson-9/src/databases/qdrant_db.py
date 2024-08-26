@@ -1,13 +1,14 @@
 import os
 from databases.db import Database
-from langchain_community.vectorstores import Qdrant
+from langchain_qdrant import QdrantVectorStore, Qdrant
+from qdrant_client import QdrantClient
+from qdrant_client.http.models import VectorParams, Distance
 
 DEFAULT_QDRANT_PATH="~/.qdrant"
 DEFAULT_QDRANT_COLLECTION="mycollection"
 
 class QdrantDatabase(Database):
-    def __init__(self, config):
-        self.qdrant = None
+    def __init__(self, config, embeddings):
         self.config = config
         self.qdrant_path = os.path.expanduser(self.config.get('qdrant_path', DEFAULT_QDRANT_PATH))
         self.qdrant_collection = self.config.get('qdrant_collection', DEFAULT_QDRANT_COLLECTION)
@@ -22,14 +23,25 @@ class QdrantDatabase(Database):
             raise NotADirectoryError(f"{self.qdrant_path} exists but is not a directory.")
         else:
             # If the path exists and it is a directory
-            print(f"QDrant directory already exists: {self.qdrant_path}")
+            print(f"Qdrant directory already exists: {self.qdrant_path}")
 
-    def store(self, chunks, embeddings):
-        if chunks:
-            self.qdrant = Qdrant.from_texts(
-                chunks,
-                embeddings,
-                path=self.qdrant_path,
+        qdrant_client = QdrantClient(path=self.qdrant_path)
+        self.embeddings = embeddings
+        # Check if the collection already exists in the QDrant path
+        try:
+            qdrant_client.get_collection(collection_name=self.qdrant_collection)
+            print(f"Qdrant collection {self.qdrant_collection} already exists.")
+        except ValueError:
+            print(f"Qdrant collection {self.qdrant_collection} does not exist. Creating the collection...")
+            embedding_vector_size = config['embedding_vector_size']
+            embedding_distance_function = config['embedding_distance_function']
+            qdrant_client.create_collection(
                 collection_name=self.qdrant_collection,
-                force_recreate=True
+                vectors_config=VectorParams(size=embedding_vector_size, distance=Distance(embedding_distance_function))
             )
+            print(f"Collection {self.qdrant_collection} created.")
+        self.qdrant = QdrantVectorStore(client=qdrant_client, collection_name=self.qdrant_collection, embedding=embeddings)
+
+    def store(self, chunks):
+        if chunks:
+            self.qdrant.add_texts(chunks)
