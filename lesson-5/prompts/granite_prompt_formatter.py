@@ -8,7 +8,7 @@ class GranitePromptFormatter(PromptFormatter):
     "If available, use the following pieces of context enclosed by triple backquote to answer the question at the end\n"
     "Don't mention the word 'context' in the answer.\n\n"
     "Context:\n"
-    "``\n`"
+    "```\n"
     "{context}\n"
     "```\n\n"
     "Question: {user_message}\n"
@@ -26,12 +26,12 @@ class GranitePromptFormatter(PromptFormatter):
     # This method creates the Granite v2 prompt for the model starting from a message list like this:
     #
     # [
-    #   {"role": "system", "content": system_message},
-    #   {"role": "user", "content": user_message},
-    #   {"role": "assistant", "content": assistant_message},
-    #   {"role": "user", "content": user_message},
-    #   {"role": "assistant", "content": assistant_message},
-    #   {"role": "user", "content": user_message},
+    #   SystemMessage,
+    #   HumanMessage,
+    #   AIMessage,
+    #   HumanMessage,
+    #   AIMessage,
+    #   HumanMessage,
     #   ...
     # ]
     #

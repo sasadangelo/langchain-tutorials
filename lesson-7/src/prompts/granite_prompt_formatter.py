@@ -26,12 +26,12 @@ class GranitePromptFormatter(PromptFormatter):
     # This method creates the Granite v2 prompt for the model starting from a message list like this:
     #
     # [
-    #   {"role": "system", "content": system_message},
-    #   {"role": "user", "content": user_message},
-    #   {"role": "assistant", "content": assistant_message},
-    #   {"role": "user", "content": user_message},
-    #   {"role": "assistant", "content": assistant_message},
-    #   {"role": "user", "content": user_message},
+    #   SystemMessage,
+    #   HumanMessage,
+    #   AIMessage,
+    #   HumanMessage,
+    #   AIMessage,
+    #   HumanMessage,
     #   ...
     # ]
     #
