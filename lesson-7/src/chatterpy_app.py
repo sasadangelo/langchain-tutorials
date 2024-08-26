@@ -25,13 +25,13 @@ config = load_config(args.config)
 # Create a ChatBOT object
 chatbot = ChatBOT(config)
 
-# Print a welcome message for the ChatBOT command-line interface.
+# Print a welcome message for the ChatterPy command-line interface.
 print("Welcome to the ChatBOT command-line interface!")
 print("Start the conversation (Type 'quit' or press 'CTRL-D' to exit)")
 
-# This is the main entry point of the ChatBOT command-line interface.
+# This is the main entry point of the ChatterPy command-line interface.
 # It handles command-line arguments, initializes the ChatBOT, and
-# facilitates a conversation with the ChatBOT until the user chooses to exit.
+# facilitates a conversation with the ChatterPy until the user chooses to exit.
 def main():
     try:
         while True:
