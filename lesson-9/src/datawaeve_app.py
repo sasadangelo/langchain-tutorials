@@ -1,7 +1,7 @@
 import argparse
 import yaml
 from datasources.pdf_source import PDFSource
-from datawaeve_cli import DataWeaveCLI
+from datawaeve.datawaeve_cli import DataWeaveCLI
 
 def load_config(config_file):
     with open(config_file, 'r') as f:
