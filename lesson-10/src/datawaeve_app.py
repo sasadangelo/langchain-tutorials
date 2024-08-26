@@ -2,7 +2,7 @@ import argparse
 import yaml
 from dotenv import load_dotenv
 from datasources.pdf_source import PDFSource
-from datawaeve_cli import DataWeaveCLI
+from datawaeve.datawaeve_cli import DataWeaveCLI
 
 def load_environment(env_file):
     load_dotenv(env_file)

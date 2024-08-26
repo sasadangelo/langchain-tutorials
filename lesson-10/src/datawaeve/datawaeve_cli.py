@@ -56,7 +56,7 @@ class DataWeaveCLI:
 
     def load_wikipedia_sources(self, wikipedia_urls):
       for wikipedia_url in wikipedia_urls:
-          if DataWeaveCLI.__is_valid_wikipedia_url(wikipedia_url):
+          if self.__is_valid_wikipedia_url(wikipedia_url):
               self.sources.append(WikipediaSource(wikipedia_url))
           else:
               print(f"Invalid Wikipedia URL: {wikipedia_url}")
