@@ -1,6 +1,6 @@
 # Langchain tutorials
 
-These tutorials will help you to build, step by step, a chatbot using Large Languages Models (LLM) and Lanch Chain. Here the list of lessons:
+These tutorials will help you to build, step by step, a RAG Chatbot using Large Languages Models (LLM) and Lanch Chain. Here the list of lessons:
 
 * [Lesson 1: Hello LLM](lesson-1/README.md)
 * [Lesson 2: Hello LLM with providers configuration](lesson-2/README.md)
