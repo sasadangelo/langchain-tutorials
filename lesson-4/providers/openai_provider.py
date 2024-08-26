@@ -1,6 +1,5 @@
 from providers.provider import LLMProvider
 from langchain_openai import ChatOpenAI
-# from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
 # Make sure you have a Python 3 virtual environment active:
 # $ source venv/bin/activate
@@ -22,11 +21,6 @@ class OpenAIProvider(LLMProvider):
         model_name = self.config['model']
         base_url = self.config['base_url']
         self.model = ChatOpenAI(model_name=model_name, openai_api_base=base_url)
-        # self.chat_prompt_template = ChatPromptTemplate.from_messages(
-        #     [
-        #        MessagesPlaceholder(variable_name="messages"),
-        #     ]
-        # )
 
     def generate(self, prompt):
         print("****************************************************************")
