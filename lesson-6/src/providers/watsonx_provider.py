@@ -1,8 +1,5 @@
-from typing import Union
 from providers.provider import LLMProvider
 from langchain_ibm import WatsonxLLM
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 
 class WatsonXProvider(LLMProvider):
     def create_model(self):

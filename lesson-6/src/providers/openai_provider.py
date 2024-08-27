@@ -1,6 +1,5 @@
 from providers.provider import LLMProvider
 from langchain_openai import ChatOpenAI
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
 # Make sure you have a Python 3 virtual environment active:
 # $ source venv/bin/activate
