@@ -17,7 +17,7 @@ load_dotenv()
 # Then run the llama.cpp server with the input mode:
 # $ (venv) python3 -m llama_cpp.server --model <GGUF model path>
 
-# To use ChatGPT 3.5 set model_name="gpt-3.5-turbo" and omit the parameter openai_api_base
+# To use ChatGPT 3.5 set model_name="gpt-3.5-turbo" and openai_api_base="https://api.openai.com/v1"
 # To use ChatGPT 4 set model_name="gpt-4" and omit the parameter openai_api_base
 llm = ChatOpenAI(model_name="llama-2-7b-chat",
                 openai_api_base="http://localhost:8000/v1")
