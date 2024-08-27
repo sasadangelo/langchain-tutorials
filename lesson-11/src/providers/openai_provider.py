@@ -1,6 +1,5 @@
 from providers.provider import LLMProvider
 from langchain_openai import ChatOpenAI
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
 DEFAULT_TEMPERATURE=0.7
 DEFAULT_MAX_TOKENS=200
