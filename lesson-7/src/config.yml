@@ -44,7 +44,7 @@ model: "llama3"
 base_url: http://localhost:11434
 parameters:
   temperature: 0.8
-  max_tokens: 128
+  max_tokens: 200
   top_k: 40
   top_p: 0.9
   repeat_penalty: 1.1
