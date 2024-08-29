@@ -6,7 +6,7 @@
 # project_id: "330903cb-a235-45c5-acbd-b15fb40858e7"
 # api_url: "https://eu-de.ml.cloud.ibm.com"
 # parameters:
-#   decoding_method: greedy
+#   decoding_method: sample
 #   min_new_tokens: 1
 #   max_new_tokens: 500
 

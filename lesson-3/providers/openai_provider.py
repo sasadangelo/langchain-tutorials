@@ -22,6 +22,6 @@ class OpenAIProvider(LLMProvider):
         base_url = self.config['base_url']
         self.model = ChatOpenAI(model_name=model_name, openai_api_base=base_url)
 
-    def generate(self, prompt):
-        result = self.model.invoke(prompt)
+    def generate(self, messages):
+        result = self.model.invoke(messages)
         return result.content

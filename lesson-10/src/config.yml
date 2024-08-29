@@ -92,9 +92,6 @@ chat_history_memory: buffer
 
 # chat_history_memory: window
 # chat_history_memory_window: 3
-
-# At the moment, this memory strategy doesn't work with llamacpp. The reason is that this provider is managed by the LLama class in the
-# llama_cpp_python library. To overcome this limitation the provider should use the LLamaCpp class in the langchain_community.llms package.
 # chat_history_memory: summary
 
 ####################################################################################################
@@ -109,7 +106,7 @@ qdrant_collection: mycollection
 embedding_provider: "ollama"
 embedding_model: "llama3"
 embedding_vector_size: 4096
-embedding_distance_function allowed values: Cosine, Euclid, Dot
+# embedding_distance_function allowed values: Cosine, Euclid, Dot
 embedding_distance_function: Cosine
 
 ####################################################################################################

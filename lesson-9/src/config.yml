@@ -3,7 +3,8 @@
 ####################################################################################################
 # provider: "watsonx"
 # model: "ibm/granite-13b-chat-v2"
-# project_id: "330903cb-a235-45c5-acbd-b15fb40858e7"
+# project_id: "330903cb-a235-45c5-acbd-b15fb40858e7" # Angelo account
+# project_id: "9c1b9ea0-4cdf-4fef-b4d9-5a8902ec817e" # Rome Team account
 # api_url: "https://eu-de.ml.cloud.ibm.com"
 # parameters:
   # Conversing with granite-13b-chat-v2 values suggested here:
@@ -16,6 +17,7 @@
 #   repeat_penalty: 1.05
 #   top_k: 40
 #   context_size: 8192
+# prompt_formatter: granite
 
 ####################################################################################################
 # LLama.cpp configuration parameters
@@ -32,6 +34,7 @@
 #   repeat_penalty: 1.1
 #   top_k: 40
 #   context_size: 2048
+# prompt_formatter: plain
 
 ####################################################################################################
 # Ollama configuration parameters
@@ -46,6 +49,7 @@ parameters:
   top_p: 0.9
   repeat_penalty: 1.1
   context_size: 8192
+prompt_formatter: plain
 
 ####################################################################################################
 # OpenAI configuration parameters
@@ -64,6 +68,7 @@ parameters:
 #   max_tokens: -1 # -1 Only works on ChatGPT
 #   top_p: 0.9
 #   repeat_penalty: 1.1
+# prompt_formatter: plain
 
 ####################################################################################################
 # System Message Prompt
@@ -104,7 +109,7 @@ qdrant_collection: mycollection
 embedding_provider: "ollama"
 embedding_model: "llama3"
 embedding_vector_size: 4096
-embedding_distance_function allowed values: Cosine, Euclid, Dot
+# embedding_distance_function allowed values: Cosine, Euclid, Dot
 embedding_distance_function: Cosine
 
 ####################################################################################################
