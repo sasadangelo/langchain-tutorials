@@ -3,7 +3,6 @@ import pprint
 from typing import List, Union
 from providers.provider import LLMProvider
 from langchain_community.llms import LlamaCpp
-from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 
 DEFAULT_MAX_TOKENS=16
 DEFAULT_TEMPERATURE=0.2
