@@ -4,5 +4,3 @@
 **/.env_watsonx
 venv
 .vscode/
-**/myconfig.yml
-lesson-1/watsonx.py.bck

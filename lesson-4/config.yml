@@ -3,7 +3,6 @@
 ####################################################################################################
 # provider: "watsonx"
 # model: "ibm/granite-13b-chat-v2"
-# project_id="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 # api_url: "https://eu-de.ml.cloud.ibm.com"
 # parameters:
 #   decoding_method: sample

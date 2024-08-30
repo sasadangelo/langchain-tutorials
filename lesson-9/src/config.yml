@@ -3,7 +3,6 @@
 ####################################################################################################
 # provider: "watsonx"
 # model: "ibm/granite-13b-chat-v2"
-# project_id="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 # api_url: "https://eu-de.ml.cloud.ibm.com"
 # parameters:
   # Conversing with granite-13b-chat-v2 values suggested here:
@@ -92,8 +91,6 @@ chat_history_memory: buffer
 # chat_history_memory: window
 # chat_history_memory_window: 3
 
-# At the moment, this memory strategy doesn't work with llamacpp. The reason is that this provider is managed by the LLama class in the
-# llama_cpp_python library. To overcome this limitation the provider should use the LLamaCpp class in the langchain_community.llms package.
 # chat_history_memory: summary
 
 ####################################################################################################

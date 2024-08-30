@@ -3,7 +3,6 @@
 ####################################################################################################
 # provider: "watsonx"
 # model: "ibm/granite-13b-chat-v2"
-# project_id="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 # api_url: "https://eu-de.ml.cloud.ibm.com"
 # parameters:
   # Conversing with granite-13b-chat-v2 values suggested here:
@@ -91,6 +90,7 @@ chat_history_memory: buffer
 
 # chat_history_memory: window
 # chat_history_memory_window: 3
+
 # chat_history_memory: summary
 
 ####################################################################################################
