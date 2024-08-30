@@ -2,6 +2,8 @@ import torch
 from transformers import AutoTokenizer
 from transformers import AutoModel
 from dotenv import load_dotenv
+from sklearn.manifold import TSNE
+import matplotlib.pyplot as plt
 
 ENV_FILE=".env"
 
@@ -36,12 +38,41 @@ def main():
     # Ottieni gli embeddings direttamente dai token IDs
     with torch.no_grad():  # Disable the calculation of the efficiency gradient
         outputs = model(input_ids)
-        embeddings = outputs.last_hidden_state
+        embeddings = outputs.last_hidden_state.squeeze(0)
 
     # Print the embeddings (with positional embedding)
     print("Token IDs:", token_ids)
     print("Embeddings Shape:", embeddings.shape)
     print("Embeddings:", embeddings)
+
+    # Convert embeddings to numpy array
+    embeddings_np = embeddings.numpy()
+
+    # Determine a suitable perplexity value
+    num_samples = embeddings_np.shape[0]
+    perplexity = min(30, num_samples - 1)  # perplexity must be less than num_samples
+
+    # Reduce dimensionality with t-SNE
+    tsne = TSNE(n_components=3, perplexity=perplexity, random_state=0)
+    embeddings_3d = tsne.fit_transform(embeddings_np)
+
+    # Plotting
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+
+    # Plot each token embedding
+    for i, token in enumerate(tokens):
+        ax.scatter(embeddings_3d[i, 0], embeddings_3d[i, 1], embeddings_3d[i, 2], label=token)
+
+    # Adding labels to the points
+    for i, token in enumerate(tokens):
+        ax.text(embeddings_3d[i, 0], embeddings_3d[i, 1], embeddings_3d[i, 2], token)
+
+    ax.set_xlabel('X axis')
+    ax.set_ylabel('Y axis')
+    ax.set_zlabel('Z axis')
+    plt.title('3D t-SNE visualization of token embeddings')
+    plt.show()
 
 if __name__ == "__main__":
     main()
