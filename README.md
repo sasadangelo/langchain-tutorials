@@ -16,7 +16,7 @@ These tutorials will help you to build, step by step, a RAG Chatbot using Large 
 
 ## Prerequisites
 
-### How to install Python 3
+### How to install Python 3 (min version 3.12)
 
 To run the tutorials you need Python 3 installed on your machine. On Mac you can simply type:
 
@@ -32,17 +32,18 @@ To run the tutorials with Ollama provider you need to install ollama cli:
 brew install ollama
 ```
 
-Then, you should download the LLM **llama3** model:
-```
-ollama pull llama3
-```
-
-This commandwill download the model in `~/.ollama`folder. You can start the ollama server with the command:
+You can start the ollama server with the command:
 ```
 ollama serve
 ```
 
-In another terminal you can list the downloaded model using the commands:
+In another terminal:
+- you should download the LLM **llama3** model in the `~/.ollama` folder:
+```
+ollama pull llama3
+```
+
+- you can list the downloaded model using the commands:
 ```
 ollama list
 ```
