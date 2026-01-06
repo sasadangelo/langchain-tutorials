@@ -12,7 +12,7 @@ from protocols.protocol import LLMProtocol
 # To use ChatGPT 3.5 set model_name="gpt-3.5-turbo" and omit the parameter openai_api_base
 # To use ChatGPT 4 set model_name="gpt-4" and omit the parameter openai_api_base
 class OpenAIProtocol(LLMProtocol):
-    def create_model(self):
+    def create_protocol(self):
         self._protocol = ChatOpenAI(
             model_name=chatterpy_config.protocol.model.name, openai_api_base=chatterpy_config.protocol.api_url
         )

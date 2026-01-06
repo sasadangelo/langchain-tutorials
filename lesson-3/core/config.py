@@ -4,61 +4,28 @@
 # -----------------------------------------------------------------------------
 from enum import Enum
 from typing import ClassVar
+
 from pydantic import BaseModel
 from pydantic_settings import BaseSettings, PydanticBaseSettingsSource, SettingsConfigDict
 from pydantic_settings.sources import YamlConfigSettingsSource
 
 
-class OllamaParameters(BaseModel):
-    temperature: float | None = 0.7
-
-
-class DecodingMethod(str, Enum):
-    SAMPLE = "sample"
-    GREEDY = "greedy"
-
-
-class WatsonxParameters(BaseModel):
-    decoding_method: str = DecodingMethod.SAMPLE.value
-    min_new_tokens: int = 1
-    max_new_tokens: int = 500
-    temperature: float | None = 0.7
-
-
-class OpenAIParameters(BaseModel):
-    temperature: float | None = 0.7
-    max_tokens: int | None = 512
-
-
 class ProtocolName(str, Enum):
     OLLAMA = "ollama"
-    WATSONX = "watsonx"
     OPENAI = "openai"
+    WATSONX = "watsonx"
 
 
-class OllamaProtocol(BaseModel):
-    name: ProtocolName = ProtocolName.OLLAMA
-    model: str
-    api_url: str = "http://localhost:11434"
-    parameters: OllamaParameters = OllamaParameters()
+class ModelConfig(BaseModel):
+    name: str
+    parameters: dict[str, object] = {}
 
 
-class WatsonxProtocol(BaseModel):
-    name: ProtocolName = ProtocolName.WATSONX
-    model: str
-    api_url: str = "https://eu-de.ml.cloud.ibm.com"
-    space_id: str
-    parameters: WatsonxParameters
-
-
-class OpenAIProtocol(BaseModel):
-    name: ProtocolName = ProtocolName.OPENAI
-    model: str
-    api_url: str = "https://api.openai.com/v1"
-    parameters: OpenAIParameters = OpenAIParameters()
-
-
-ProtocolConfig = OllamaProtocol | WatsonxProtocol | OpenAIProtocol
+class ProtocolConfig(BaseModel):
+    name: ProtocolName
+    api_url: str
+    model: ModelConfig
+    space_id: str | None = None  # only watsonx
 
 
 class AppSettings(BaseSettings):
@@ -83,9 +50,10 @@ class AppSettings(BaseSettings):
         """Customize settings sources: YAML file only."""
         return (
             YamlConfigSettingsSource(settings_cls),
+            env_settings,
             init_settings,
         )
 
 
 # Load settings at module import
-settings: AppSettings = AppSettings()  # type: ignore[call-arg]
+chatterpy_config: AppSettings = AppSettings()  # type: ignore[call-arg]
