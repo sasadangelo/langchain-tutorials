@@ -1,33 +1,22 @@
-import argparse
+# -----------------------------------------------------------------------------
+# Copyright (c) 2026 Salvatore D'Angelo, Code4Projects
+# Licensed under the MIT License. See LICENSE.md for details.
+# -----------------------------------------------------------------------------
 from dotenv import load_dotenv
-import yaml
-from providers.provider_factory import LLMProviderFactory
+from protocols import LLMProtocolFactory
+from langchain_core.messages import AIMessage, HumanMessage
+from langchain_core.language_models.base import LanguageModelInput
 
-def load_environment(env_file):
-    load_dotenv(env_file)
-
-def load_config(config_file):
-    with open(config_file, 'r') as f:
-        config = yaml.safe_load(f)
-    return config
-
-# Parse command-line arguments
-parser = argparse.ArgumentParser(description='LLM Provider Factory')
-parser.add_argument('--config', '-c', type=str, required=True, help='Path to the config file')
-parser.add_argument('--env', '-e', type=str, required=False, default=".env", help='Path to the environment file')
-args = parser.parse_args()
 
 # Load environment variables
-load_environment(args.env)
-# Load the configuration file
-config = load_config(args.config)
+load_dotenv()
 
 # Initialize model based on config
-provider = LLMProviderFactory.get_provider(config)
+protocol = LLMProtocolFactory.get_protocol()
 
 # Inizialize the message list
-messages = [{"role": "user", "content": "Who is Robinson Crusoe?"}]
+messages: LanguageModelInput = [HumanMessage("Who is Robinson Crusoe?")]
 
 # Generate the answer using the model
-result = provider.generate(messages)
-print(result)
+result: AIMessage = protocol.invoke(messages)
+print(result.content)
