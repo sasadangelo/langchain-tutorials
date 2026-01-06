@@ -4,6 +4,7 @@
 # -----------------------------------------------------------------------------
 from core import settings
 from dotenv import load_dotenv
+from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 from protocols import LLMProtocolFactory
 
@@ -14,7 +15,8 @@ load_dotenv()
 protocol = LLMProtocolFactory.get_protocol()
 
 # Initialize the conversation
-conversation = [SystemMessage(content=settings.system_message)]
+conversation = ChatMessageHistory()
+conversation.add_message(SystemMessage(content=settings.system_message))
 
 try:
     while True:
@@ -22,12 +24,12 @@ try:
         user_input: str = input("You: ")
 
         # Add the user message to the conversation
-        conversation.append(HumanMessage(content=user_input))
+        conversation.add_message(HumanMessage(content=user_input))
 
         # Get the answer from the model
-        ai_response: AIMessage = protocol.invoke(conversation)
+        ai_response: AIMessage = protocol.invoke(conversation.messages)
 
-        conversation.append(ai_response)
+        conversation.add_message(ai_response)
 
         # Print the AI reply
         print(f"Assistant: {ai_response.content}")

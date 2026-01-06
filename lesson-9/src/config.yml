@@ -5,8 +5,8 @@
 # model: "ibm/granite-13b-chat-v2"
 # api_url: "https://eu-de.ml.cloud.ibm.com"
 # parameters:
-  # Conversing with granite-13b-chat-v2 values suggested here:
-  # https://dataplatform.cloud.ibm.com/docs/content/wsj/analyze-data/fm-models-ibm-chat.html?context=wx
+# Conversing with granite-13b-chat-v2 values suggested here:
+# https://dataplatform.cloud.ibm.com/docs/content/wsj/analyze-data/fm-models-ibm-chat.html?context=wx
 #   decoding_method: sample
 #   min_new_tokens: 1
 #   max_new_tokens: 900
@@ -94,10 +94,10 @@ chat_history_memory: buffer
 # chat_history_memory: summary
 
 ####################################################################################################
-# Data Weave CLI
+# RAG
 ####################################################################################################
-document_chunk_size: 100
-document_chunk_overlap: 0
+rag_enabled: true
+rag_top_k_chunks: 10
 
 qdrant_path: ~/.qdrant
 qdrant_collection: mycollection
@@ -107,6 +107,21 @@ embedding_model: "llama3"
 embedding_vector_size: 4096
 # embedding_distance_function allowed values: Cosine, Euclid, Dot
 embedding_distance_function: Cosine
+
+####################################################################################################
+# Data Weave CLI
+####################################################################################################
+document_chunk_size: 100
+document_chunk_overlap: 0
+
+# qdrant_path: ~/.qdrant
+# qdrant_collection: mycollection
+
+# embedding_provider: "ollama"
+# embedding_model: "llama3"
+# embedding_vector_size: 4096
+# embedding_distance_function allowed values: Cosine, Euclid, Dot
+# embedding_distance_function: Cosine
 
 ####################################################################################################
 # DEBUG option

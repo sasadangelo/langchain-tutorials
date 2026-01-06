@@ -1,13 +1,14 @@
-# Lesson 9: DataWaeve CLI and Qdrant
+# Lesson 10: RAG implementation
 
-In this lesson we will introduce the DataWaeve command line. This tool will be used to grab data from different sources (i.e. pdf, wikipedia, etc) and store it in a QDrant vector database. This change will be useful in the next lesson to implement RAG.
+In this lesson we will introduce the RAG implementation. Using the configuration parameter rag_enabled, we can activate the RAG so that a context relative to the
+user question is retrieved from QDrant and added to the prompt.
 
 ## How to run the Chatbot
 
 To run the chatbot type the following command:
 
 ```
-cd lesson-p/src
+cd lesson-10/src
 python3 chatterpy_app.py -c config.yml
 ```
 
@@ -16,6 +17,6 @@ python3 chatterpy_app.py -c config.yml
 To run the datawaeve cli type the following command:
 
 ```
-cd lesson-9/src
+cd lesson-10/src
 python3 datawaeve_app.py -c config.yml [--pdf <pdf file name>] [--wikipedia <wikipedia url>]
 ```

@@ -1,15 +1,13 @@
 import os
 import re
 from urllib.parse import urlparse
-from langchain.text_splitter import TokenTextSplitter
-from datasources.wikipedia_source import WikipediaSource
-from langchain.text_splitter import TokenTextSplitter
-from datasources.pdf_source import PDFSource
-from databases.qdrant_db import QdrantDatabase
-from embeddings.embedding_provider_factory import EmbeddingProviderFactory
 
-DEFAULT_CHUNK_SIZE=100
-DEFAULT_CHUNK_OVERLAP=0
+from databases.qdrant_db import QdrantDatabase
+from datasources.pdf_source import PDFSource
+from datasources.wikipedia_source import WikipediaSource
+from embeddings.embedding_provider_factory import EmbeddingProviderFactory
+from langchain.text_splitter import TokenTextSplitter
+
 
 # DataWaeve CLI class
 class DataWeaveCLI:
@@ -21,26 +19,24 @@ class DataWeaveCLI:
         for source in self.sources:
             source.load_data()
             text = source.get_text()
-            chunk_size=self.config.get("document_chunk_size", 100)
-            chunk_overlap=self.config.get("document_chunk_overlap", 0)
-            text_splitter = TokenTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
+            text_splitter = TokenTextSplitter(chunk_size=100, chunk_overlap=0)
             chunks = text_splitter.split_text(text)
             provider = EmbeddingProviderFactory.get_embedding_provider(self.config)
             self.db = QdrantDatabase(self.config, provider.embeddings)
             self.db.store(chunks)
 
     def load_pdf_sources(self, pdf_paths):
-      for pdf_path in pdf_paths:
-          if os.path.isfile(pdf_path) and pdf_path.endswith('.pdf'):
-              self.sources.append(PDFSource(pdf_path))
-          elif os.path.isdir(pdf_path):
-              pdf_files = [f for f in os.listdir(pdf_path) if f.endswith('.pdf')]
-              if pdf_files:
-                  self.sources.append(PDFSource(pdf_path))
-              else:
-                  print(f"No PDF files found in directory: {pdf_path}")
-          else:
-              print(f"Invalid path or unsupported format: {pdf_path}")
+        for pdf_path in pdf_paths:
+            if os.path.isfile(pdf_path) and pdf_path.endswith(".pdf"):
+                self.sources.append(PDFSource(pdf_path))
+            elif os.path.isdir(pdf_path):
+                pdf_files = [f for f in os.listdir(pdf_path) if f.endswith(".pdf")]
+                if pdf_files:
+                    self.sources.append(PDFSource(pdf_path))
+                else:
+                    print(f"No PDF files found in directory: {pdf_path}")
+            else:
+                print(f"Invalid path or unsupported format: {pdf_path}")
 
     def __is_valid_wikipedia_url(self, url):
         # Check if the string is a valid URL
@@ -52,7 +48,7 @@ class DataWeaveCLI:
             return False
 
         # Define the Wikipedia URL pattern
-        wikipedia_pattern = r'^(https?://)?(www\.)?(wikipedia\.org|[\w\-]+\.wikipedia\.org)/wiki/.+$'
+        wikipedia_pattern = r"^(https?://)?(www\.)?(wikipedia\.org|[\w\-]+\.wikipedia\.org)/wiki/.+$"
 
         # Use regex to check if the URL matches the Wikipedia pattern
         if re.match(wikipedia_pattern, url):
@@ -60,8 +56,8 @@ class DataWeaveCLI:
         return False
 
     def load_wikipedia_sources(self, wikipedia_urls):
-      for wikipedia_url in wikipedia_urls:
-          if self.__is_valid_wikipedia_url(wikipedia_url):
-              self.sources.append(WikipediaSource(wikipedia_url))
-          else:
-              print(f"Invalid Wikipedia URL: {wikipedia_url}")
+        for wikipedia_url in wikipedia_urls:
+            if self.__is_valid_wikipedia_url(wikipedia_url):
+                self.sources.append(WikipediaSource(wikipedia_url))
+            else:
+                print(f"Invalid Wikipedia URL: {wikipedia_url}")

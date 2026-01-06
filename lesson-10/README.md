@@ -1,14 +1,20 @@
-# Lesson 10: RAG implementation
+# Lesson 11: Add UI interface with Streamlit
 
-In this lesson we will introduce the RAG implementation. Using the configuration parameter rag_enabled, we can activate the RAG so that a context relative to the
-user question is retrieved from QDrant and added to the prompt.
+In this lesson we will introduce an UI interface for our chatbot. We will use streamlit to create easily a UI for prototype purpose.
 
 ## How to run the Chatbot
 
-To run the chatbot type the following command:
+To run the chatbot in UI mode, type the following command:
 
 ```
-cd lesson-10/src
+cd lesson-11/src
+streamlist run chatterpy_gui.py
+```
+
+To run the chatbot in text mode, type the following command:
+
+```
+cd lesson-11/src
 python3 chatterpy_app.py -c config.yml
 ```
 
@@ -17,6 +23,6 @@ python3 chatterpy_app.py -c config.yml
 To run the datawaeve cli type the following command:
 
 ```
-cd lesson-10/src
+cd lesson-11/src
 python3 datawaeve_app.py -c config.yml [--pdf <pdf file name>] [--wikipedia <wikipedia url>]
 ```

@@ -6,5 +6,5 @@ class LLMProvider:
     def create_model(self):
         raise NotImplementedError("Subclasses should implement this method.")
 
-    def generate(self, prompt):
+    def generate(self, chat_history_messages, user_message):
         raise NotImplementedError("Subclasses should implement this method.")

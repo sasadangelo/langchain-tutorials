@@ -5,8 +5,8 @@
 # model: "ibm/granite-13b-chat-v2"
 # api_url: "https://eu-de.ml.cloud.ibm.com"
 # parameters:
-  # Conversing with granite-13b-chat-v2 values suggested here:
-  # https://dataplatform.cloud.ibm.com/docs/content/wsj/analyze-data/fm-models-ibm-chat.html?context=wx
+# Conversing with granite-13b-chat-v2 values suggested here:
+# https://dataplatform.cloud.ibm.com/docs/content/wsj/analyze-data/fm-models-ibm-chat.html?context=wx
 #   decoding_method: sample
 #   min_new_tokens: 1
 #   max_new_tokens: 900
@@ -41,7 +41,7 @@ provider: "ollama"
 model: "llama3"
 base_url: http://localhost:11434
 parameters:
-  temperature: 0.9
+  temperature: 0.8
   max_tokens: 200
   top_k: 40
   top_p: 0.9
@@ -63,7 +63,7 @@ prompt_formatter: plain
 # base_url: "http://localhost:8000/v1"
 # parameters:
 #   temperature: 1
-#   max_tokens: 500 # -1 Only works on ChatGPT
+#   max_tokens: -1 # -1 Only works on ChatGPT
 #   top_p: 0.9
 #   repeat_penalty: 1.1
 # prompt_formatter: plain
@@ -82,6 +82,16 @@ system_message: |
 #   You are helpful and harmless and you follow ethical guidelines and promote positive behavior. You always respond to greetings
 #   (for example, hi, hello, g'day, morning, afternoon, evening, night, what's up, nice to meet you, sup) with "Hello! I am Granite
 #   Chat, created by IBM. How can I help you today?". Please do not say anything else and do not start a conversation.
+
+####################################################################################################
+# Memory Strategy
+####################################################################################################
+# chat_history_memory: buffer
+
+# chat_history_memory: window
+# chat_history_memory_window: 3
+
+chat_history_memory: summary
 
 ####################################################################################################
 # DEBUG option

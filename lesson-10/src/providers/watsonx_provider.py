@@ -1,6 +1,8 @@
 import os
-from providers.provider import LLMProvider
+
 from langchain_ibm import WatsonxLLM
+from providers.provider import LLMProvider
+
 
 class WatsonXProvider(LLMProvider):
     def create_model(self):
@@ -10,14 +12,11 @@ class WatsonXProvider(LLMProvider):
         self.project_id = os.getenv("WATSONX_PROJECT_ID")
 
         self.model = WatsonxLLM(
-            model_id=self.config["model"],
-            url=self.url,
-            project_id=self.project_id,
-            params=self.parameters
+            model_id=self.config["model"], url=self.url, project_id=self.project_id, params=self.parameters
         )
 
     def generate(self, prompt):
-        if self.config['debug'] == True:
+        if self.config["debug"] is True:
             print("****************************************************************")
             print("Prompt:")
             print(prompt)

@@ -1,12 +1,12 @@
-# Lesson 5: just a few improvements
+# Lesson 6: an Object Oriented Chatbot with LangChain
 
-In this lesson I will show you a small improvements using appropriate LangChain classes to manage the conversation.
+In this lesson we will improve our Chatbot using an Object Oriented approach to have a better code structure.
 
 ## How to run the Chatbot
 
 To run the chatbot type the following command:
 
 ```
-cd lesson-5
-python3 chatterpy.py -c config.yml
+cd lesson-6/src
+python3 chatterpy_app.py -c config.yml
 ```
