@@ -4,7 +4,6 @@ This tutorial show how to ask to LLM the question "Who is Robinson Crusoe?" usin
 
 * OLLama
 * OpenAI
-* LLamaCPP
 * WatsonX
 
 Before run one of the tutorials change the directory in the `lesson-1` folder:
@@ -16,7 +15,7 @@ cd lesson-1
 
 Type the following command:
 ```
-python3 ollama.py
+python3 myollama.py
 ```
 
 ## How to run "Hello LLM" with WatsonX

@@ -1,26 +1,24 @@
-from langchain_openai import ChatOpenAI
+# -----------------------------------------------------------------------------
+# Copyright (c) 2026 Salvatore D'Angelo, Code4Projects
+# Licensed under the MIT License. See LICENSE.md for details.
+# -----------------------------------------------------------------------------
 from dotenv import load_dotenv
+from langchain_openai import ChatOpenAI
 
-# Load the .env file
+# Load the .env file for environment variables like API keys
 load_dotenv()
 
-# Make sure you have a Python 3 virtual environment active:
-# $ source venv/bin/activate
-#
-# Make sure you installed the following dependencies:
-# $ (venv) pip3 install llama_cpp_python
-# $ (venv) pip3 install sse_starlette
-# $ (venv) pip3 install starlette_context
-# $ (venv) pip3 install pydantic_settings
-# $ (venv) pip3 install fastapi
-#
-# Then run the llama.cpp server with the input mode:
-# $ (venv) python3 -m llama_cpp.server --model <GGUF model path>
-
-# To use ChatGPT 3.5 set model_name="gpt-3.5-turbo" and openai_api_base="https://api.openai.com/v1"
-# To use ChatGPT 4 set model_name="gpt-4" and omit the parameter openai_api_base
-llm = ChatOpenAI(model_name="llama-2-7b-chat",
-                openai_api_base="http://localhost:8000/v1")
-response=llm.invoke("Who is Robinson Crusoe?")
+# Create a model instance.
+# You can use various models:
+# - OpenAI cloud models: "gpt-3.5-turbo", "gpt-4"
+# - Local OpenAI-compatible servers:
+#     * LM Studio
+#     * Ollama
+#     * llama.cpp server
+#     * MPT-Chat local server
+#     * Any other server that supports the OpenAI REST API spec
+chat = ChatOpenAI(model_name="llama3.1:latest", openai_api_base="http://localhost:11434/v1")
+# Send a prompt to the model
+response = chat.invoke("Who is Robinson Crusoe?")
+# Print the model's response
 print(response.content)
-

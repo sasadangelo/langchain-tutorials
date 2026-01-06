@@ -16,12 +16,20 @@ These tutorials will help you to build, step by step, a RAG Chatbot using Large 
 
 ## Prerequisites
 
-### How to install Python 3 (min version 3.12)
+### How to install Python 3 (version 3.12)
 
 To run the tutorials you need Python 3 installed on your machine. On Mac you can simply type:
 
 ```
 brew install python3
+```
+
+### How to install uv
+
+To run the tutorials you need uv package manager installed on your machine. On Mac you can simply type:
+
+```
+brew install uv
 ```
 
 ### How to setup Ollama
@@ -40,7 +48,7 @@ ollama serve
 In another terminal:
 - you should download the LLM **llama3** model in the `~/.ollama` folder:
 ```
-ollama pull llama3
+ollama pull llama3.1
 ```
 
 - you can list the downloaded model using the commands:
@@ -61,15 +69,9 @@ cd langchain-tutorials
 
 To run the tutorials do the following steps:
 
-1. Create and activate the Python virtual environment:
+1. Install the dependencies
 ```
-python3 -m venv venv
-source venv/bin/activate
-```
-
-2. Install the dependencies
-```
-pip3 install -r requirements.txt
+uv sync
 ```
 
-3. Run the tutorial following the instructions in each lesson
+2. Run the tutorial following the instructions in each lesson
