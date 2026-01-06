@@ -3,33 +3,36 @@
 ####################################################################################################
 protocol:
   name: "ollama"
-  model: "llama3.1:latest"
   api_url: http://localhost:11434
+  model:
+    name: "llama3.1:latest"
 ####################################################################################################
 # WatsonX configuration parameters
 ####################################################################################################
 # protocol:
 #   name: "watsonx"
-#   model: "ibm/granite-4-h-small"
 #   api_url: "https://eu-de.ml.cloud.ibm.com"
 #   space_id: "dd2dd8ef-a711-4919-a61b-b6115becd96a"
-#   parameters:
-#     decoding_method: sample
-#     min_new_tokens: 1
-#     max_new_tokens: 500
+#   model:
+#     name: "ibm/granite-4-h-small"
+#     parameters:
+#       decoding_method: sample
+#       min_new_tokens: 1
+#       max_new_tokens: 500
 ####################################################################################################
 # OpenAI configuration parameters
 ####################################################################################################
 # protocol:
 #   name: "openai"
 #   # You can use:
-#   # - "gpt-3.5-turbo" for ChatGPT 3.5
-#   # - "gpt-4" for ChatGPT 4
-#   # - "instructlab/merlinite-7b-lab" for InstructLab and Merlinite model
-#   model: "llama3.1:latest"
-#   # You can use:
 #   # - https://api.openai.com/v1 for ChatGPT
 #   api_url: "http://localhost:11434/v1"
+#   model:
+#     # You can use:
+#     # - "gpt-3.5-turbo" for ChatGPT 3.5
+#     # - "gpt-4" for ChatGPT 4
+#     # - "instructlab/merlinite-7b-lab" for InstructLab and Merlinite model
+#     name: "llama3.1:latest"
 
 ####################################################################################################
 # System Message Prompt

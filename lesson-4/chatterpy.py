@@ -2,7 +2,7 @@
 # Copyright (c) 2026 Salvatore D'Angelo, Code4Projects
 # Licensed under the MIT License. See LICENSE.md for details.
 # -----------------------------------------------------------------------------
-from core import settings
+from core import chatterpy_config
 from dotenv import load_dotenv
 from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
@@ -16,7 +16,7 @@ protocol = LLMProtocolFactory.get_protocol()
 
 # Initialize the conversation
 conversation = ChatMessageHistory()
-conversation.add_message(SystemMessage(content=settings.system_message))
+conversation.add_message(SystemMessage(content=chatterpy_config.system_message))
 
 try:
     while True:
