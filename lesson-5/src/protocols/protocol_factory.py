@@ -18,8 +18,8 @@ class LLMProtocolFactory:
 
     @classmethod
     def get_protocol(cls) -> LLMProtocol:
-        provider_name = chatterpy_config.protocol.name
-        provider_class = cls.protocols.get(provider_name)
-        if not provider_class:
-            raise ValueError(f"Unsupported provider: {provider_name}")
-        return provider_class()
+        protocol_name = chatterpy_config.protocol.name
+        protocol_class = cls.protocols.get(protocol_name)
+        if not protocol_class:
+            raise ValueError(f"Unsupported provider: {protocol_name}")
+        return protocol_class()
