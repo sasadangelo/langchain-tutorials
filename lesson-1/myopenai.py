@@ -17,7 +17,7 @@ load_dotenv()
 #     * llama.cpp server
 #     * MPT-Chat local server
 #     * Any other server that supports the OpenAI REST API spec
-chat = ChatOpenAI(model_name="llama3.1:latest", openai_api_base="http://localhost:11434/v1")
+chat = ChatOpenAI(model="llama3.1:latest", base_url="http://localhost:11434/v1")
 # Send a prompt to the model
 response = chat.invoke("Who is Robinson Crusoe?")
 # Print the model's response

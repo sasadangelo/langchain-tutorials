@@ -18,6 +18,6 @@ class LLMProtocol(ABC):
         pass
 
     @abstractmethod
-    def invoke(self, message: LanguageModelInput) -> AIMessage:
+    def invoke(self, messages: LanguageModelInput) -> AIMessage:
         """Send a message to the LLM and return the AI response."""
         pass

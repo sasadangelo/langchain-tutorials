@@ -3,10 +3,10 @@
 # Licensed under the MIT License. See LICENSE.md for details.
 # -----------------------------------------------------------------------------
 import os
+
 from dotenv import load_dotenv
 from ibm_watsonx_ai.metanames import GenTextParamsMetaNames as GenParams
 from langchain_ibm import ChatWatsonx
-
 
 # Load the .env file
 load_dotenv()
@@ -26,7 +26,8 @@ space_id = os.getenv("WATSONX_SPACE_ID")
 
 chat = ChatWatsonx(
     model_id="ibm/granite-4-h-small",
-    url="https://eu-de.ml.cloud.ibm.com",
+    url="https://eu-de.ml.cloud.ibm.com",  # type: ignore[arg-type]  # ChatWatsonx expects SecretStr but accepts str at
+    # runtime. The problem is ignored because an URL is not a secret in our opinion.
     space_id=space_id,
     params=parameters,
 )

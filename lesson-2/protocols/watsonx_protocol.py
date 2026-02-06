@@ -13,7 +13,8 @@ class WatsonXProtocol(LLMProtocol):
     def create_protocol(self):
         self._protocol = ChatWatsonx(
             model_id=chatterpy_config.protocol.model.name,
-            url=chatterpy_config.protocol.api_url,
+            url=chatterpy_config.protocol.api_url,  # type: ignore[arg-type]  # ChatWatsonx expects SecretStr but
+            # accepts str at runtime. The problem is ignored because an URL is not a secret in our opinion.
             space_id=chatterpy_config.protocol.space_id,
             params=chatterpy_config.protocol.model.parameters,
         )

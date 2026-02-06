@@ -9,12 +9,13 @@ from langchain_openai import ChatOpenAI
 from protocols.protocol import LLMProtocol
 
 
-# To use ChatGPT 3.5 set model_name="gpt-3.5-turbo" and omit the parameter openai_api_base
-# To use ChatGPT 4 set model_name="gpt-4" and omit the parameter openai_api_base
+# To use ChatGPT 3.5 set protocol.name="gpt-3.5-turbo" and protocol.api_url="https://api.openai.com/v1" in the
+# config.yml. To use ChatGPT 4 set protocol.name="gpt-4" and protocol.api_url="https://api.openai.com/v1" in the
+# config.yml
 class OpenAIProtocol(LLMProtocol):
     def create_protocol(self):
         self._protocol = ChatOpenAI(
-            model_name=chatterpy_config.protocol.model.name, openai_api_base=chatterpy_config.protocol.api_url
+            model=chatterpy_config.protocol.model.name, base_url=chatterpy_config.protocol.api_url
         )
 
     def invoke(self, messages: LanguageModelInput) -> AIMessage:

@@ -3,10 +3,24 @@
 # Licensed under the MIT License. See LICENSE.md for details.
 # -----------------------------------------------------------------------------
 from chatbot.chatbot import ChatBOT
+from core import LoggerManager, chatterpy_config, setup_logging
 from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
+
+# Initialize logging first
+setup_logging(
+    level=chatterpy_config.log.level,
+    console=chatterpy_config.log.console,
+    file=chatterpy_config.log.file,
+    rotation=chatterpy_config.log.rotation,
+    retention=chatterpy_config.log.retention,
+    compression=chatterpy_config.log.compression,
+)
+
+# Create a main logger
+logger = LoggerManager.get_logger("main")
 
 # Create a ChatBOT object
 chatbot = ChatBOT()
@@ -28,8 +42,14 @@ def main():
                 print("\nBye.")
                 break
 
+            # Log user message
+            logger.info(f"user> {user_message}")
+
             # Generate the chatbot's response
             response = chatbot.get_answer(user_message)
+
+            # Log AI response
+            logger.info(f"assistant> {response}")
 
             # Print the chatbot's response
             print("")

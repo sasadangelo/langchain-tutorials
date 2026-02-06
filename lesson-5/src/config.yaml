@@ -48,3 +48,14 @@ system_message: |
 #   You are helpful and harmless and you follow ethical guidelines and promote positive behavior. You always respond to greetings
 #   (for example, hi, hello, g'day, morning, afternoon, evening, night, what's up, nice to meet you, sup) with "Hello! I am Granite
 #   Chat, created by IBM. How can I help you today?". Please do not say anything else and do not start a conversation.
+
+####################################################################################################
+# Logging
+####################################################################################################
+log:
+  level: "DEBUG"
+  console: false
+  file: "logs/chat.log"
+  rotation: "10 MB"
+  retention: "7 days"
+  compression: "zip"
