@@ -4,7 +4,7 @@
 # -----------------------------------------------------------------------------
 from abc import ABC, abstractmethod
 
-from langchain_core.messages import HumanMessage, SystemMessage, get_buffer_string, trim_messages
+from langchain_core.messages import AIMessage, HumanMessage, SystemMessage, get_buffer_string, trim_messages
 from langchain_core.messages.base import BaseMessage
 from protocols import LLMProtocol
 
@@ -40,19 +40,26 @@ class BufferMemoryStrategy(BaseChatMemoryStrategy):
 
 
 class WindowMemoryStrategy(BaseChatMemoryStrategy):
-    """Strategy that keeps only the last 'k' messages using a sliding window."""
+    """
+    Strategy that keeps only the last 'k' conversation exchanges (Human+AI pairs).
 
-    def __init__(self, window: int):
-        self._window = window  # Number of messages to retain
+    For example, window=3 means keep the last 3 exchanges (6 messages total).
+    """
+
+    def __init__(self, window: int) -> None:
+        self._window = window  # Number of exchanges (Human+AI pairs) to retain
 
     def process_messages(self, system_message: SystemMessage, history_messages: list[BaseMessage]) -> list[BaseMessage]:
+        # Calculate max_tokens as window * 2 (each exchange = Human + AI message)
+        max_messages: int = self._window * 2
+
         # Trim messages based on count (token_counter=len)
         # We ensure the window starts with a HumanMessage for better LLM performance
-        trimmed_history = trim_messages(
+        trimmed_history: list[BaseMessage] = trim_messages(
             history_messages,
             strategy="last",
             token_counter=len,
-            max_tokens=self._window,
+            max_tokens=max_messages,
             start_on="human",
             include_system=False,
         )
@@ -72,21 +79,25 @@ class SummaryMemoryStrategy(BaseChatMemoryStrategy):
             return [system_message] + history_messages
 
         # Split history: everything except the last 2 messages will be summarized
-        to_summarize = history_messages[:-2]
-        last_exchange = history_messages[-2:]
+        to_summarize: list[BaseMessage] = history_messages[:-2]
+        last_exchange: list[BaseMessage] = history_messages[-2:]
 
         # Explicitly request a summary in English
-        summary_prompt = (
+        summary_prompt: str = (
             "Summarize the following conversation history concisely in English. "
-            f"Focus on key facts and context: {get_buffer_string(to_summarize)}"
+            f"Focus on key facts and context: {get_buffer_string(messages=to_summarize)}"
         )
 
         # Generate the summary using the provided LLM protocol
-        summary_response = self._protocol.invoke([HumanMessage(content=summary_prompt)])
-        summary_content = summary_response.content
+        summary_response: AIMessage = self._protocol.invoke(messages=[HumanMessage(content=summary_prompt)])
+
+        # Extract content as string (handle both str and list types)
+        summary_content: str = (
+            summary_response.content if isinstance(summary_response.content, str) else str(summary_response.content)
+        )
 
         # Create a SystemMessage to hold the condensed historical context
-        summary_msg = SystemMessage(content=f"Summary of previous interactions: {summary_content}")
+        summary_msg: SystemMessage = SystemMessage(content=f"Summary of previous interactions: {summary_content}")
 
         # Final structure: [Core Instructions] + [Historical Summary] + [Latest Messages]
         return [system_message, summary_msg] + last_exchange

@@ -3,13 +3,13 @@
 # Licensed under the MIT License. See LICENSE.md for details.
 # -----------------------------------------------------------------------------
 from core import chatterpy_config
-from memory import (
+from memory.memory import (
     BaseChatMemoryStrategy,
     BufferMemoryStrategy,
     SummaryMemoryStrategy,
     WindowMemoryStrategy,
 )
-from protocols import LLMProtocolFactory
+from protocols import LLMProtocol, LLMProtocolFactory
 
 
 class MemoryFactory:
@@ -32,7 +32,7 @@ class MemoryFactory:
             return WindowMemoryStrategy(window=window_size)
         if chatterpy_config.chat_history_memory == "summary":
             # The summary strategy needs an LLM protocol to perform the summarization
-            protocol = LLMProtocolFactory.get_protocol()
+            protocol: LLMProtocol = LLMProtocolFactory.get_protocol()
             # Assuming provider.model (or the provider itself) follows your LLMProtocol
             return SummaryMemoryStrategy(protocol=protocol)
 

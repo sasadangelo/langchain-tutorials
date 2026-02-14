@@ -5,7 +5,7 @@
 from core import LoggerManager, chatterpy_config
 from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
-from protocols import LLMProtocolFactory
+from protocols import LLMProtocol, LLMProtocolFactory
 
 
 class ChatBOT:
@@ -13,7 +13,7 @@ class ChatBOT:
         self._logger = LoggerManager.get_logger(name=self.__class__.__name__)
         self._conversation = ChatMessageHistory()
         # Initialize the model provider according to the configuration file config.yml.
-        self._protocol = LLMProtocolFactory.get_protocol()
+        self._protocol: LLMProtocol = LLMProtocolFactory.get_protocol()
         # Generate text using the model
         system_message = chatterpy_config.system_message
         self._logger.info(f"System Message: {system_message}")

@@ -8,7 +8,7 @@ protocol:
     name: "llama3.1:latest"
     parameters:
       temperature: 0.9
-      max_tokens: 200
+      max_tokens: 500
       top_k: 40
       top_p: 0.9
       repeat_penalty: 1.1
@@ -69,9 +69,20 @@ system_message: |
 #   Chat, created by IBM. How can I help you today?". Please do not say anything else and do not start a conversation.
 
 ####################################################################################################
+# Logging
+####################################################################################################
+log:
+  level: "DEBUG"
+  console: false
+  file: "logs/chat.log"
+  rotation: "10 MB"
+  retention: "7 days"
+  compression: "zip"
+
+####################################################################################################
 # Memory Strategy
 ####################################################################################################
 # chat_history_memory: buffer
-# chat_history_memory: window
+# chat_history_memory: window
 # chat_history_memory_window: 3
 chat_history_memory: summary
