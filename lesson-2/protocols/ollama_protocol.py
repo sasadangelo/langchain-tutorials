@@ -10,8 +10,8 @@ from protocols.protocol import LLMProtocol
 
 
 class OllamaProtocol(LLMProtocol):
-    def create_protocol(self):
+    def create_protocol(self) -> None:
         self._protocol = ChatOllama(model=chatterpy_config.protocol.model.name)
 
     def invoke(self, messages: LanguageModelInput) -> AIMessage:
-        return self._protocol.invoke(messages)
+        return self._protocol.invoke(input=messages)

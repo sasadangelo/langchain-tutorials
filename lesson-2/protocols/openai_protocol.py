@@ -13,10 +13,10 @@ from protocols.protocol import LLMProtocol
 # config.yml. To use ChatGPT 4 set protocol.name="gpt-4" and protocol.api_url="https://api.openai.com/v1" in the
 # config.yml
 class OpenAIProtocol(LLMProtocol):
-    def create_protocol(self):
+    def create_protocol(self) -> None:
         self._protocol = ChatOpenAI(
             model=chatterpy_config.protocol.model.name, base_url=chatterpy_config.protocol.api_url
         )
 
     def invoke(self, messages: LanguageModelInput) -> AIMessage:
-        return self._protocol.invoke(messages)
+        return self._protocol.invoke(input=messages)
