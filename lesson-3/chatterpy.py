@@ -4,13 +4,13 @@
 # -----------------------------------------------------------------------------
 from dotenv import load_dotenv
 from langchain_core.messages import AIMessage, HumanMessage
-from protocols import LLMProtocolFactory
+from protocols import LLMProtocol, LLMProtocolFactory
 
 # Load environment variables
 load_dotenv()
 
 # Initialize model based on config
-protocol = LLMProtocolFactory.get_protocol()
+protocol: LLMProtocol = LLMProtocolFactory.get_protocol()
 
 try:
     while True:
@@ -18,7 +18,7 @@ try:
         user_input: str = input("You: ")
 
         # Get the answer from the model
-        ai_response: AIMessage = protocol.invoke([HumanMessage(content=user_input)])
+        ai_response: AIMessage = protocol.invoke(messages=[HumanMessage(content=user_input)])
 
         # Print the AI reply
         print(f"Assistant: {ai_response.content}")
