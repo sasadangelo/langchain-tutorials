@@ -5,18 +5,19 @@
 from core import chatterpy_config
 from dotenv import load_dotenv
 from langchain_community.chat_message_histories import ChatMessageHistory
+from langchain_core.chat_history import InMemoryChatMessageHistory
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
-from protocols import LLMProtocolFactory
+from protocols import LLMProtocol, LLMProtocolFactory
 
 # Load environment variables
 load_dotenv()
 
 # Initialize model based on config
-protocol = LLMProtocolFactory.get_protocol()
+protocol: LLMProtocol = LLMProtocolFactory.get_protocol()
 
 # Initialize the conversation
-conversation = ChatMessageHistory()
-conversation.add_message(SystemMessage(content=chatterpy_config.system_message))
+conversation: InMemoryChatMessageHistory = ChatMessageHistory()
+conversation.add_message(message=SystemMessage(content=chatterpy_config.system_message))
 
 try:
     while True:
@@ -24,12 +25,12 @@ try:
         user_input: str = input("You: ")
 
         # Add the user message to the conversation
-        conversation.add_message(HumanMessage(content=user_input))
+        conversation.add_message(message=HumanMessage(content=user_input))
 
         # Get the answer from the model
-        ai_response: AIMessage = protocol.invoke(conversation.messages)
+        ai_response: AIMessage = protocol.invoke(messages=conversation.messages)
 
-        conversation.add_message(ai_response)
+        conversation.add_message(message=ai_response)
 
         # Print the AI reply
         print(f"Assistant: {ai_response.content}")
