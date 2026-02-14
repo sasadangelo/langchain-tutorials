@@ -1,12 +1,8 @@
-# Conversation - a Generic ChatBot conversation
-#
-# This class represents a generic chatbot conversation.
-#
-# Copyright (C) 2023 Salvatore D'Angelo
-# Maintainer: Salvatore D'Angelo sasadangelo@gmail.com
-#
-# SPDX-License-Identifier: MIT
-from memory.memory_factory import MemoryFactory
+# -----------------------------------------------------------------------------
+# Copyright (c) 2026 Salvatore D'Angelo, Code4Projects
+# Licensed under the MIT License. See LICENSE.md for details.
+# -----------------------------------------------------------------------------
+from memory import BaseChatMemoryStrategy, MemoryFactory
 
 
 # This class represents a generic chatbot conversion.
@@ -17,7 +13,7 @@ class Conversation:
 
     def __init(self, config):
         # Inizialize the conversation
-        self.conversation = MemoryFactory.get_memory(config)
+        self.conversation: BaseChatMemoryStrategy = MemoryFactory.get_memory()
 
     def save_interaction(self, user_message, ai_message):
         self.conversation.save_context({"input": user_message.content}, {"output": ai_message.content})

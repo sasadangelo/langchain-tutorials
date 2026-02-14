@@ -1,39 +1,26 @@
-# ChatBOT - the ChatBOT main class.
-#
-# This class represents a generic chatbot. It is composed by:
-# - a model
-# - a chat history
-#
-# Copyright (C) 2023 Salvatore D'Angelo
-# Maintainer: Salvatore D'Angelo sasadangelo@gmail.com
-#
-# SPDX-License-Identifier: MIT
-from chatbot.conversation import Conversation
+# -----------------------------------------------------------------------------
+# Copyright (c) 2026 Salvatore D'Angelo, Code4Projects
+# Licensed under the MIT License. See LICENSE.md for details.
+# -----------------------------------------------------------------------------
+from core import chatterpy_config
+from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
-from prompts.prompt_formatter_factory import PromptFormatterFactory
-from providers.provider_factory import LLMProviderFactory
+from protocols import LLMProtocolFactory
 
 
 class ChatBOT:
-    def __init__(self, config):
-        self.config = config
-        self.conversation = Conversation(config)
+    def __init__(self):
+        self._conversation = ChatMessageHistory()
         # Initialize the model provider according to the configuration file config.yml.
-        self.provider = LLMProviderFactory.get_provider(config)
-        self.system_message = SystemMessage(content=self.config["system_message"])
-        self.prompt_formatter = PromptFormatterFactory.get_prompt_formatter(self.config)
+        self._protocol = LLMProtocolFactory.get_protocol()
+        # Generate text using the model
+        self._conversation.add_message(SystemMessage(content=chatterpy_config.system_message))
 
     # Once the user insert the question, this method is called to generate the answer.
-    def get_answer(self, question):
+    def get_answer(self, question: str) -> str:
         # Add the user message to the list of users
-        user_message = HumanMessage(content=question)
-        # Create the prompt to pass to the model
-        prompt = self.prompt_formatter.get_prompt(
-            self.system_message, self.conversation.get_chat_history_messages(), user_message
-        )
+        self._conversation.add_message(HumanMessage(content=question))
         # Get the answer from the model
-        ai_message_text = self.provider.generate(prompt)
-        ai_message = AIMessage(content=ai_message_text)
-        # Save the interaction in the chat history
-        self.conversation.save_interaction(user_message, ai_message)
-        return ai_message_text
+        ai_message: AIMessage = self._protocol.invoke(self._conversation.messages)
+        self._conversation.add_message(ai_message)
+        return ai_message.content
