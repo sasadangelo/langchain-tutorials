@@ -18,6 +18,8 @@ dependencies = [
   "llama_cpp_python==0.3.16", # "sse-starlette==2.1.3",  # "starlette-context==0.4.0",
   "pydantic-settings==2.12.0",
   "fastapi==0.128.0",
+  "langchain>=1.2.1",
+  "loguru>=0.7.3",
 ]
 description = "Tutorials and experiments with LangChain and various LLM providers"
 keywords = ["python", "langchain", "llm", "chatbot", "AI"]

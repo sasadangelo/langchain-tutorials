@@ -3,5 +3,6 @@
 # Licensed under the MIT License. See LICENSE.md for details.
 # -----------------------------------------------------------------------------
 from .config import ProtocolName, chatterpy_config
+from .log import LoggerManager, setup_logging
 
-__all__ = ["chatterpy_config", "ProtocolName"]
+__all__ = ["chatterpy_config", "ProtocolName", "LoggerManager", "setup_logging"]

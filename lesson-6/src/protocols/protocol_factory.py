@@ -2,7 +2,7 @@
 # Copyright (c) 2026 Salvatore D'Angelo, Code4Projects
 # Licensed under the MIT License. See LICENSE.md for details.
 # -----------------------------------------------------------------------------
-from core import ProtocolName, chatterpy_config
+from core import LoggerManager, ProtocolName, chatterpy_config
 from protocols.ollama_protocol import OllamaProtocol
 from protocols.openai_protocol import OpenAIProtocol
 from protocols.protocol import LLMProtocol
@@ -10,6 +10,7 @@ from protocols.watsonx_protocol import WatsonXProtocol
 
 
 class LLMProtocolFactory:
+    _logger = LoggerManager.get_logger(__name__)
     protocols = {
         ProtocolName.OLLAMA: OllamaProtocol,
         ProtocolName.OPENAI: OpenAIProtocol,
@@ -19,6 +20,7 @@ class LLMProtocolFactory:
     @classmethod
     def get_protocol(cls) -> LLMProtocol:
         protocol_name = chatterpy_config.protocol.name
+        cls._logger.info(f"Protocol name: {protocol_name}")
         protocol_class = cls.protocols.get(protocol_name)
         if not protocol_class:
             raise ValueError(f"Unsupported provider: {protocol_name}")

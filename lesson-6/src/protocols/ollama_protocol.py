@@ -4,7 +4,7 @@
 # -----------------------------------------------------------------------------
 from typing import Any
 
-from core import chatterpy_config
+from core import LoggerManager, chatterpy_config
 from langchain_core.language_models.base import LanguageModelInput
 from langchain_core.messages import AIMessage
 from langchain_ollama import ChatOllama
@@ -28,15 +28,27 @@ def translate_parameters(
 
 
 class OllamaProtocol(LLMProtocol):
+    _logger = LoggerManager.get_logger(__name__)
+
     def create_protocol(self):
-        # Create the model using the specified paremeters
+        model = chatterpy_config.protocol.model.name
+        base_url = chatterpy_config.protocol.api_url
+        self._logger.info(f"Ollama protocol: model={model} - url={base_url}")
+        # Translate semantic parameters into Ollama-specific
         params = translate_parameters(
             chatterpy_config.protocol.model.parameters,
             OLLAMA_PARAM_MAP,
         )
+        # Log LLM parameters
+        if params:
+            self._logger.info(f"Ollama parameters: {params}")
+        else:
+            self._logger.info("Ollama parameters: (none)")
+
+        # Create the protocol with the parameters
         self._protocol = ChatOllama(
-            model=chatterpy_config.protocol.model.name,
-            base_url=chatterpy_config.protocol.api_url,
+            model=model,
+            base_url=base_url,
             **params,
         )
 

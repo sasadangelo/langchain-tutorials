@@ -1,4 +1,4 @@
-# Lesson 7: Configure generation parameters
+# Lesson 6: Configure generation parameters
 
 In this lesson we will improve our Chatbot allowing to configure the generation parameters like:
 
@@ -13,7 +13,7 @@ In this lesson we will improve our Chatbot allowing to configure the generation 
 
 To run the chatbot type the following command:
 
-```
-cd lesson-7/src
-python3 chatterpy_app.py -c config.yml
+```bash
+cd lesson-6/src
+uv run python3 chatterpy_app.py
 ```

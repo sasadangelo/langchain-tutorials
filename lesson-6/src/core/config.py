@@ -5,7 +5,7 @@
 from enum import Enum
 from typing import ClassVar
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from pydantic_settings import BaseSettings, PydanticBaseSettingsSource, SettingsConfigDict
 from pydantic_settings.sources import YamlConfigSettingsSource
 
@@ -28,9 +28,23 @@ class ProtocolConfig(BaseModel):
     space_id: str | None = None  # only watsonx
 
 
+class LogConfig(BaseSettings):
+    """Logging configuration settings."""
+
+    level: str = Field(default="INFO", description="Log level")
+    console: bool = Field(default=True, description="Enable console logging")
+    file: str | None = Field(default=None, description="Log file path")
+    rotation: str = Field(default="10 MB", description="Log rotation size")
+    retention: str = Field(default="7 days", description="Log retention period")
+    compression: str = Field(default="zip", description="Log compression format")
+
+    model_config: ClassVar[SettingsConfigDict] = SettingsConfigDict(extra="ignore")
+
+
 class AppSettings(BaseSettings):
     protocol: ProtocolConfig
     system_message: str
+    log: LogConfig
 
     model_config: ClassVar[SettingsConfigDict] = SettingsConfigDict(
         yaml_file="config.yaml",
