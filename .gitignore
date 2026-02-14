@@ -4,3 +4,4 @@
 **/.env_watsonx
 .venv
 **/logs/*.log
+**/myconfig.yaml

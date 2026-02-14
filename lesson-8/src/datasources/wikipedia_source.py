@@ -1,36 +1,41 @@
-from urllib.parse import urlparse
+# -----------------------------------------------------------------------------
+# Copyright (c) 2026 Salvatore D'Angelo, Code4Projects
+# Licensed under the MIT License. See LICENSE.md for details.
+# -----------------------------------------------------------------------------
+from urllib.parse import ParseResult, urlparse
 
 import wikipediaapi
 from datasources.data_source import Source
+from wikipediaapi import Wikipedia, WikipediaPage
 
 
 class WikipediaSource(Source):
-    def __init__(self, source):
+    def __init__(self, source) -> None:
         self.source = source
         self.pages = []
 
-    def extract_title_from_url(self):
+    def extract_title_from_url(self) -> str:
         # Extract the page title from the Wikipedia URL
-        parsed_url = urlparse(self.source)
-        path = parsed_url.path
+        parsed_url: ParseResult = urlparse(url=self.source)
+        path: str = parsed_url.path
         if path.startswith("/wiki/"):
             return path[len("/wiki/") :]
         else:
             raise ValueError("The URL does not seem to be a valid Wikipedia URL.")
 
-    def load_data(self):
+    def load_data(self) -> None:
         # Initialize the Wikipedia API
         user_agent = "DataWaeve CLI"
-        wiki_wiki = wikipediaapi.Wikipedia(user_agent, "en")
+        wiki_wiki: Wikipedia = wikipediaapi.Wikipedia(user_agent=user_agent, language="en")
 
         # Extract the page title from the URL
         try:
-            title = self.extract_title_from_url()
-            page = wiki_wiki.page(title)
+            title: str = self.extract_title_from_url()
+            page: WikipediaPage = wiki_wiki.page(title)
 
             if not page.exists():
                 print(f"Page not found: {self.source}")
-                return []
+                return
 
             # Return the page content as a list of documents
             self.pages = [page.text]
@@ -38,7 +43,7 @@ class WikipediaSource(Source):
         except Exception as e:
             print(f"An error occurred while loading Wikipedia data: {e}")
 
-    def get_text(self):
+    def get_text(self) -> str:
         if self.pages:
             return self.pages[0]
         else:
