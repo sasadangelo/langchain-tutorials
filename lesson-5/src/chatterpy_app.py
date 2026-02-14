@@ -20,10 +20,10 @@ setup_logging(
 )
 
 # Create a main logger
-logger = LoggerManager.get_logger("main")
+logger = LoggerManager.get_logger(name="main")
 
 # Create a ChatBOT object
-chatbot = ChatBOT()
+chatbot: ChatBOT = ChatBOT()
 
 # Print a welcome message for the ChatterPy command-line interface.
 print("Welcome to the ChatterPy command-line interface!")
@@ -33,11 +33,11 @@ print("Start the conversation (Type 'quit' or press 'CTRL-D' to exit)")
 # This is the main entry point of the ChatterPy command-line interface.
 # It handles command-line arguments, initializes the ChatBOT, and
 # facilitates a conversation with the ChatBOT until the user chooses to exit.
-def main():
+def main() -> None:
     try:
         while True:
             # Ask input from the user
-            user_message = input("you> ")
+            user_message: str = input("you> ")
             if user_message.lower() == "quit":
                 print("\nBye.")
                 break
@@ -46,7 +46,7 @@ def main():
             logger.info(f"user> {user_message}")
 
             # Generate the chatbot's response
-            response = chatbot.get_answer(user_message)
+            response: str = chatbot.get_answer(question=user_message)
 
             # Log AI response
             logger.info(f"assistant> {response}")
