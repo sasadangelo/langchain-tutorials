@@ -3,18 +3,18 @@
 # Licensed under the MIT License. See LICENSE.md for details.
 # -----------------------------------------------------------------------------
 import os
+from typing import Any
 
 from dotenv import load_dotenv
 from ibm_watsonx_ai.metanames import GenTextParamsMetaNames as GenParams
+from langchain_core.messages.ai import AIMessage
 from langchain_ibm import ChatWatsonx
 
 # Load the .env file
 load_dotenv()
 
 # Specify the WatsonX model parameters
-parameters = {GenParams.DECODING_METHOD: "sample", GenParams.MIN_NEW_TOKENS: 1, GenParams.MAX_NEW_TOKENS: 100}
-
-parameters = {
+parameters: dict[str, Any] = {
     GenParams.DECODING_METHOD: "sample",
     GenParams.MIN_NEW_TOKENS: 1,
     GenParams.MAX_NEW_TOKENS: 200,
@@ -22,9 +22,9 @@ parameters = {
 }
 
 # Retrieve the project ID from the environment variable
-space_id = os.getenv("WATSONX_SPACE_ID")
+space_id: str | None = os.getenv("WATSONX_SPACE_ID")
 
-chat = ChatWatsonx(
+chat: ChatWatsonx = ChatWatsonx(
     model_id="ibm/granite-4-h-small",
     url="https://eu-de.ml.cloud.ibm.com",  # type: ignore[arg-type]  # ChatWatsonx expects SecretStr but accepts str at
     # runtime. The problem is ignored because an URL is not a secret in our opinion.
@@ -32,6 +32,6 @@ chat = ChatWatsonx(
     params=parameters,
 )
 # Send a prompt to the model
-response = chat.invoke("Who is Robinson Crusoe?")
+response: AIMessage = chat.invoke(input="Who is Robinson Crusoe?")
 # Print the model's response
 print(response.content)
