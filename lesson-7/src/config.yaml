@@ -82,7 +82,9 @@ log:
 ####################################################################################################
 # Memory Strategy
 ####################################################################################################
-# chat_history_memory: buffer
-# chat_history_memory: window
-# chat_history_memory_window: 3
-chat_history_memory: summary
+memory:
+  # con i valori buffer, window o summary
+  chat_history: summary
+  # chat_history: buffer
+  # chat_history: window
+  chat_history_window: 3 # only window

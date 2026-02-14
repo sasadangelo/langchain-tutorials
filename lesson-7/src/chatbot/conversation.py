@@ -34,7 +34,8 @@ class Conversation:
 
         # Log additional info for Window strategy
         if hasattr(self._memory_strategy, "_window"):
-            self._logger.info(f"Window Size: {self._memory_strategy._window} exchanges")
+            window_size = getattr(self._memory_strategy, "_window")
+            self._logger.info(f"Window Size: {window_size} exchanges ({window_size * 2} messages)")
 
     def add_user_message(self, content: str) -> None:
         """

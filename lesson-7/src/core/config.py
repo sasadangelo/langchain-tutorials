@@ -34,6 +34,13 @@ class MemoryType(str, Enum):
     SUMMARY = "summary"
 
 
+class MemoryConfig(BaseModel):
+    """Memory configuration settings."""
+
+    chat_history: MemoryType = MemoryType.BUFFER
+    chat_history_window: int | None = None  # only if chat_history==MemoryType.WINDOW
+
+
 class LogConfig(BaseSettings):
     """Logging configuration settings."""
 
@@ -51,9 +58,7 @@ class AppSettings(BaseSettings):
     protocol: ProtocolConfig
     system_message: str
     log: LogConfig
-    # Memory parameters
-    chat_history_memory: MemoryType = MemoryType.BUFFER
-    chat_history_memory_window: int | None = None  # only if chat_history_memory==MemoryType.WINDOW
+    memory: MemoryConfig
 
     model_config: ClassVar[SettingsConfigDict] = SettingsConfigDict(
         yaml_file="config.yaml",

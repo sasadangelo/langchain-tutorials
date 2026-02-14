@@ -20,20 +20,20 @@ class MemoryFactory:
 
     @staticmethod
     def get_memory() -> BaseChatMemoryStrategy:
-        if chatterpy_config.chat_history_memory == "buffer":
+        if chatterpy_config.memory.chat_history == "buffer":
             return BufferMemoryStrategy()
-        if chatterpy_config.chat_history_memory == "window":
+        if chatterpy_config.memory.chat_history == "window":
             # Default window size of 10 if not specified
-            window_size = (
-                chatterpy_config.chat_history_memory_window
-                if chatterpy_config.chat_history_memory_window is not None
+            window_size: int = (
+                chatterpy_config.memory.chat_history_window
+                if chatterpy_config.memory.chat_history_window is not None
                 else 10
             )
             return WindowMemoryStrategy(window=window_size)
-        if chatterpy_config.chat_history_memory == "summary":
+        if chatterpy_config.memory.chat_history == "summary":
             # The summary strategy needs an LLM protocol to perform the summarization
             protocol: LLMProtocol = LLMProtocolFactory.get_protocol()
             # Assuming provider.model (or the provider itself) follows your LLMProtocol
             return SummaryMemoryStrategy(protocol=protocol)
 
-        raise ValueError(f"Unknown memory strategy type: {chatterpy_config.chat_history_memory}")
+        raise ValueError(f"Unknown memory strategy type: {chatterpy_config.memory.chat_history}")
