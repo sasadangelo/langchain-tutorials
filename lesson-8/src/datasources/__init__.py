@@ -2,9 +2,12 @@
 # Copyright (c) 2025 Salvatore D'Angelo, Code4Projects
 # Licensed under the MIT License. See LICENSE.md for details.
 # -----------------------------------------------------------------------------
-from collections.abc import Iterable
+from .data_source import Source
+from .pdf_source import PDFSource
+from .wikipedia_source import WikipediaSource
 
-
-class Database:
-    def store(self, chunks: Iterable[str]) -> None:
-        raise NotImplementedError("Subclasses must implement the store method")
+__all__ = [
+    "Source",
+    "PDFSource",
+    "WikipediaSource",
+]

@@ -1,5 +1,11 @@
+# -----------------------------------------------------------------------------
+# Copyright (c) 2025 Salvatore D'Angelo, Code4Projects
+# Licensed under the MIT License. See LICENSE.md for details.
+# -----------------------------------------------------------------------------
 import os
+from collections.abc import Iterable
 
+from core import DistanceFunction, chatterpy_config
 from databases.db import Database
 from langchain_qdrant import QdrantVectorStore
 from qdrant_client import QdrantClient
@@ -10,15 +16,14 @@ DEFAULT_QDRANT_COLLECTION = "mycollection"
 
 
 class QdrantDatabase(Database):
-    def __init__(self, config, embeddings):
-        self.config = config
-        self.qdrant_path = os.path.expanduser(self.config.get("qdrant_path", DEFAULT_QDRANT_PATH))
-        self.qdrant_collection = self.config.get("qdrant_collection", DEFAULT_QDRANT_COLLECTION)
+    def __init__(self, embeddings) -> None:
+        self.qdrant_path = os.path.expanduser(chatterpy_config.rag.qdrant_path)
+        self.qdrant_collection = chatterpy_config.rag.qdrant_collection
 
         # Verify if the path exists
-        if not os.path.exists(self.qdrant_path):
+        if not os.path.exists(path=self.qdrant_path):
             # If the path doesn't exist, create it
-            os.makedirs(self.qdrant_path)
+            os.makedirs(name=self.qdrant_path)
             print(f"Created the folder: {self.qdrant_path}")
         elif not os.path.isdir(self.qdrant_path):
             # If the path exist but t's not a directory raise an error
@@ -27,7 +32,7 @@ class QdrantDatabase(Database):
             # If the path exists and it is a directory
             print(f"Qdrant directory already exists: {self.qdrant_path}")
 
-        qdrant_client = QdrantClient(path=self.qdrant_path)
+        qdrant_client: QdrantClient = QdrantClient(path=self.qdrant_path)
         self.embeddings = embeddings
         # Check if the collection already exists in the QDrant path
         try:
@@ -35,8 +40,8 @@ class QdrantDatabase(Database):
             print(f"Qdrant collection {self.qdrant_collection} already exists.")
         except ValueError:
             print(f"Qdrant collection {self.qdrant_collection} does not exist. Creating the collection...")
-            embedding_vector_size = config["embedding_vector_size"]
-            embedding_distance_function = config["embedding_distance_function"]
+            embedding_vector_size: int = chatterpy_config.rag.embedding_vector_size
+            embedding_distance_function: DistanceFunction = chatterpy_config.rag.embedding_distance_function
             qdrant_client.create_collection(
                 collection_name=self.qdrant_collection,
                 vectors_config=VectorParams(size=embedding_vector_size, distance=Distance(embedding_distance_function)),
@@ -46,6 +51,6 @@ class QdrantDatabase(Database):
             client=qdrant_client, collection_name=self.qdrant_collection, embedding=embeddings
         )
 
-    def store(self, chunks):
+    def store(self, chunks: Iterable[str]) -> None:
         if chunks:
-            self.qdrant.add_texts(chunks)
+            self.qdrant.add_texts(texts=chunks)

@@ -88,3 +88,28 @@ memory:
   # chat_history: buffer
   # chat_history: window
   # chat_history_window: 3 # only window
+
+####################################################################################################
+# Datawave CLI Logging
+####################################################################################################
+datawave_log:
+  level: "DEBUG"
+  console: false
+  file: "logs/datawave.log"
+  rotation: "10 MB"
+  retention: "7 days"
+  compression: "zip"
+
+####################################################################################################
+# RAG (Retrieval Augmented Generation) Configuration
+####################################################################################################
+rag:
+  document_chunk_size: 100
+  document_chunk_overlap: 0
+  qdrant_path: ~/.qdrant
+  qdrant_collection: mycollection
+  embedding_protocol: "ollama"
+  embedding_model: "llama3.1:latest"
+  embedding_vector_size: 4096
+  # embedding_distance_function allowed values: Cosine, Euclid, Dot
+  embedding_distance_function: Cosine

@@ -1,21 +1,36 @@
+# -----------------------------------------------------------------------------
+# Copyright (c) 2026 Salvatore D'Angelo, Code4Projects
+# Licensed under the MIT License. See LICENSE.md for details.
+# -----------------------------------------------------------------------------
 import argparse
+from argparse import ArgumentParser, Namespace
 
-import yaml
+from core import LoggerManager, chatterpy_config, setup_logging
 from datawaeve.datawaeve_cli import DataWeaveCLI
+from dotenv import load_dotenv
 
+# Load environment variables
+load_dotenv()
 
-def load_config(config_file):
-    with open(config_file) as f:
-        config = yaml.safe_load(f)
-    return config
+# Initialize logging first
+setup_logging(
+    level=chatterpy_config.datawave_log.level,
+    console=chatterpy_config.datawave_log.console,
+    file=chatterpy_config.datawave_log.file,
+    rotation=chatterpy_config.datawave_log.rotation,
+    retention=chatterpy_config.datawave_log.retention,
+    compression=chatterpy_config.datawave_log.compression,
+)
+
+# Create a main logger
+logger = LoggerManager.get_logger(name="main")
 
 
 # This is the main entry point of the DataWeave command-line interface.
-def main():
-    parser = argparse.ArgumentParser(
+def main() -> None:
+    parser: ArgumentParser = argparse.ArgumentParser(
         description="DataWeave CLI: Populate a vector database with data coming from different sources."
     )
-    parser.add_argument("--config", "-c", type=str, required=True, help="Path to the config file")
     parser.add_argument(
         "--pdf",
         type=str,
@@ -27,15 +42,17 @@ def main():
         "--wikipedia", type=str, action="append", required=False, help="Specify the URL of a Wikipedia page."
     )
 
-    args = parser.parse_args()
+    args: Namespace = parser.parse_args()
 
-    # Load the configuration file
-    config = load_config(args.config)
+    # Check if at least one source is provided
+    if not args.pdf and not args.wikipedia:
+        parser.print_help()
+        return
 
     # Load data from all the supported data sources
-    datawaeve_cli = DataWeaveCLI(config)
-    datawaeve_cli.load_pdf_sources(args.pdf) if args.pdf else []
-    datawaeve_cli.load_wikipedia_sources(args.wikipedia) if args.wikipedia else []
+    datawaeve_cli: DataWeaveCLI = DataWeaveCLI()
+    datawaeve_cli.load_pdf_sources(pdf_paths=args.pdf) if args.pdf else []
+    datawaeve_cli.load_wikipedia_sources(wikipedia_urls=args.wikipedia) if args.wikipedia else []
     datawaeve_cli.process_sources()
 
 

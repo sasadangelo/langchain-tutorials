@@ -7,8 +7,8 @@ In this lesson we will introduce the DataWaeve command line. This tool will be u
 To run the chatbot type the following command:
 
 ```
-cd lesson-p/src
-python3 chatterpy_app.py -c config.yml
+cd lesson-8/src
+python3 chatterpy_app.py
 ```
 
 ## How to run the DataWaeve CLI
@@ -16,6 +16,6 @@ python3 chatterpy_app.py -c config.yml
 To run the datawaeve cli type the following command:
 
 ```
-cd lesson-9/src
-python3 datawaeve_app.py -c config.yml [--pdf <pdf file name>] [--wikipedia <wikipedia url>]
+cd lesson-8/src
+python3 datawaeve_app.py [--pdf <pdf file name>] [--wikipedia <wikipedia url>]
 ```

@@ -50,7 +50,7 @@ system_message: |
 #   Chat, created by IBM. How can I help you today?". Please do not say anything else and do not start a conversation.
 
 ####################################################################################################
-# Logging
+# Chatterpy Logging
 ####################################################################################################
 log:
   level: "DEBUG"
