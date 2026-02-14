@@ -28,16 +28,16 @@ def translate_parameters(
 
 
 class OllamaProtocol(LLMProtocol):
-    _logger = LoggerManager.get_logger(__name__)
+    _logger = LoggerManager.get_logger(name=__name__)
 
     def create_protocol(self):
         model = chatterpy_config.protocol.model.name
         base_url = chatterpy_config.protocol.api_url
         self._logger.info(f"Ollama protocol: model={model} - url={base_url}")
         # Translate semantic parameters into Ollama-specific
-        params = translate_parameters(
-            chatterpy_config.protocol.model.parameters,
-            OLLAMA_PARAM_MAP,
+        params: dict[str, Any] = translate_parameters(
+            parameters=chatterpy_config.protocol.model.parameters,
+            mapping=OLLAMA_PARAM_MAP,
         )
         # Log LLM parameters
         if params:
@@ -53,4 +53,4 @@ class OllamaProtocol(LLMProtocol):
         )
 
     def invoke(self, messages: LanguageModelInput) -> AIMessage:
-        return self._protocol.invoke(messages)
+        return self._protocol.invoke(input=messages)

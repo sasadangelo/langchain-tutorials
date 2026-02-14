@@ -13,8 +13,8 @@ class WatsonXProtocol(LLMProtocol):
     _logger = LoggerManager.get_logger(__name__)
 
     def create_protocol(self):
-        model = chatterpy_config.protocol.model.name
-        base_url = chatterpy_config.protocol.api_url
+        model: str = chatterpy_config.protocol.model.name
+        base_url: str = chatterpy_config.protocol.api_url
         params = dict(chatterpy_config.protocol.model.parameters)  # explicit cast dict[str, Any]
         self._logger.info(f"WatsonX protocol: model={model} - url={base_url}")
 
@@ -33,4 +33,4 @@ class WatsonXProtocol(LLMProtocol):
         )
 
     def invoke(self, messages: LanguageModelInput) -> AIMessage:
-        return self._protocol.invoke(messages)
+        return self._protocol.invoke(input=messages)

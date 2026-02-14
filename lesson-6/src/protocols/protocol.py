@@ -9,11 +9,11 @@ from langchain_core.messages import AIMessage
 
 
 class LLMProtocol(ABC):
-    def __init__(self):
+    def __init__(self) -> None:
         self.create_protocol()
 
     @abstractmethod
-    def create_protocol(self):
+    def create_protocol(self) -> None:
         """Initialize the protocol client or model."""
         pass
 
