@@ -1,17 +1,21 @@
+# -----------------------------------------------------------------------------
+# Copyright (c) 2026 Salvatore D'Angelo, Code4Projects
+# Licensed under the MIT License. See LICENSE.md for details.
+# -----------------------------------------------------------------------------
+from core import chatterpy_config
 from databases.qdrant_db import QdrantDatabase
-from embeddings.embedding_provider_factory import EmbeddingProviderFactory
+from embeddings import EmbeddingProtocol, EmbeddingProtocolFactory
 
 DEFAULT_RAG_ENABLED = "false"
 
 
 class RAG:
-    def __init__(self, config):
-        self.config = config
-        self.rag_enabled = self.config.get("rag_enabled", DEFAULT_RAG_ENABLED)
-        embedding_provider = EmbeddingProviderFactory.get_embedding_provider(config)
-        self.db = QdrantDatabase(self.config, embedding_provider.embeddings) if self.rag_enabled is True else None
+    def __init__(self) -> None:
+        self.rag_enabled = chatterpy_config.rag.enabled
+        embedding_protocol: EmbeddingProtocol = EmbeddingProtocolFactory.get_embedding_protocol()
+        self.db = QdrantDatabase(embeddings=embedding_protocol.embeddings) if self.rag_enabled is True else None
 
-    def is_enabled(self):
+    def is_enabled(self) -> bool:
         return self.rag_enabled
 
     def get_context(self, user_message):
