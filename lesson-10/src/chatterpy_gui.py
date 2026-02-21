@@ -1,18 +1,26 @@
-# ChatBotApp - Manage Streamlit Application and Navigation
-#
-# This file defines the ChatBotApp class, which is responsible for managing the Streamlit chatbot.
-# It initializes the initial page, handles page selection, and serves as the entry point for running the
-# application.
-#
-# Copyright (C) 2023 Salvatore D'Angelo
-# Maintainer: Salvatore D'Angelo sasadangelo@gmail.com
-#
-# This file is part of the Running Data Analysis project.
-#
-# SPDX-License-Identifier: MIT
-import yaml
+# -----------------------------------------------------------------------------
+# Copyright (c) 2026 Salvatore D'Angelo, Code4Projects
+# Licensed under the MIT License. See LICENSE.md for details.
+# -----------------------------------------------------------------------------
+from core import LoggerManager, chatterpy_config, setup_logging
 from dotenv import load_dotenv
-from gui.chatbot_page import ChatBotPage
+from gui import ChatBotPage, Page
+
+# Load environment variables
+load_dotenv()
+
+# Initialize logging first
+setup_logging(
+    level=chatterpy_config.log.level,
+    console=chatterpy_config.log.console,
+    file=chatterpy_config.log.file,
+    rotation=chatterpy_config.log.rotation,
+    retention=chatterpy_config.log.retention,
+    compression=chatterpy_config.log.compression,
+)
+
+# Create a main logger
+logger = LoggerManager.get_logger(name="main")
 
 
 # Decorator to implement the Singleton design pattern.
@@ -36,37 +44,21 @@ def singleton(cls):
 @singleton
 class ChatBotApp:
     # The constructor load all the activities in the gpx folder of the logged in user.
-    def __init__(self, config):
-        self.current_page = None
-        self.config = config
+    def __init__(self):
+        self.current_page: Page | None = None
 
     # Runs the TrainingApp and initializes the first page as ActivityOverviewPage.
     def run(self):
-        self.select_page(ChatBotPage(self.config))
+        self.select_page(ChatBotPage())
 
     # Selects and renders the current page based on user navigation logic.
-    def select_page(self, page):
+    def select_page(self, page: Page):
         # Here you can add logic for navigating between different pages.
         # For example, if you want to show the ActivityOverviewPage as the initial page:
         self.current_page = page
         self.current_page.render()
 
 
-def load_environment(env_file):
-    load_dotenv(env_file)
-
-
-def load_config(config_file):
-    with open(config_file) as f:
-        config = yaml.safe_load(f)
-    return config
-
-
 if __name__ == "__main__":
-    # Load environment variables
-    load_environment(".env")
-    # Load the configuration file
-    config = load_config("config.yml")
-
-    app = ChatBotApp(config)
+    app: ChatBotApp = ChatBotApp()
     app.run()

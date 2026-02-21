@@ -1,26 +1,19 @@
-# ChatBotPage - Display the ChatBot page
-#
-# This class is responsible for displaying the ChatBot page using Streamlit.
-#
-# Copyright (C) 2023 Salvatore D'Angelo
-# Maintainer: Salvatore D'Angelo sasadangelo@gmail.com
-#
-# SPDX-License-Identifier: MIT
+# -----------------------------------------------------------------------------
+# Copyright (c) 2026 Salvatore D'Angelo, Code4Projects
+# Licensed under the MIT License. See LICENSE.md for details.
+# -----------------------------------------------------------------------------
+from typing import cast
+
 import streamlit as st
 from chatbot.chatbot import ChatBOT
-
-# from src.models.base_model import Model
 from gui.page import Page
-from langchain_core.messages import AIMessage, HumanMessage
+from langchain_core.messages import AIMessage, BaseMessage, HumanMessage
 
 
 # This class is responsible for displaying the ChatBOT page using Streamlit.
 class ChatBotPage(Page):
-    def __init__(self, config):
-        self.config = config
-
     # Renders the ChatBOT page.
-    def render(self):
+    def render(self) -> None:
         # Initialize the page with the title, header, and sidebar.
         self.__init_page()
         # Initialize the conversation.
@@ -28,32 +21,35 @@ class ChatBotPage(Page):
 
         # Supervise user input
         if user_input := st.chat_input("Input your question!"):
-            with st.spinner("ChatterPy is typing ..."):
-                _ = st.session_state.chatbot.get_answer(user_input)
+            with st.spinner(text="ChatterPy is typing ..."):
+                chatbot: ChatBOT = cast(ChatBOT, st.session_state.chatbot)
+                _ = chatbot.get_answer(question=user_input)
 
         # Display chat history
-        messages = st.session_state.chatbot.get_chat_history()
+        chatbot = cast(ChatBOT, st.session_state.chatbot)
+        messages: list[BaseMessage] = chatbot.get_messages()
         for message in messages:
             if isinstance(message, AIMessage):
-                with st.chat_message("assistant"):
-                    st.markdown(message.content)
+                with st.chat_message(name="assistant"):
+                    st.markdown(body=message.content)
             elif isinstance(message, HumanMessage):
-                with st.chat_message("user"):
-                    st.markdown(message.content)
+                with st.chat_message(name="user"):
+                    st.markdown(body=message.content)
 
     # Initialize the ChatBOT page
     def __init_page(self) -> None:
         st.set_page_config(page_title="ChatterPy")
-        st.header("ChatterPy")
-        chatbot = None
+        st.header(body="ChatterPy")
+        chatbot: ChatBOT | None = None
         if "chatbot" not in st.session_state:
-            chatbot = ChatBOT(self.config)
+            chatbot = ChatBOT()
             st.session_state.chatbot = chatbot
         else:
             chatbot = st.session_state.chatbot
 
     # Clear the conversation
     def __init_messages(self) -> None:
-        clear_button = st.sidebar.button("Clear Conversation", key="clear")
+        clear_button: bool = st.sidebar.button("Clear Conversation", key="clear")
         if clear_button:
-            st.session_state.chatbot.clear_conversation()
+            chatbot: ChatBOT = cast(ChatBOT, st.session_state.chatbot)
+            chatbot.clear_conversation()
