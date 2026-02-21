@@ -4,7 +4,7 @@
 # -----------------------------------------------------------------------------
 from chatbot.conversation import Conversation
 from core import LoggerManager, chatterpy_config
-from langchain_core.messages import AIMessage, BaseMessage
+from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, SystemMessage
 from protocols import LLMProtocol, LLMProtocolFactory
 from rag import RAG
 
@@ -25,11 +25,13 @@ class ChatBOT:
         Get an answer from the chatbot for the given question.
 
         This method:
-        1. Adds the user's question to the conversation history
-        2. Gets the processed messages according to the memory strategy
-        3. Sends them to the LLM to get a response
-        4. Adds the AI's response to the conversation history
-        5. Returns the response
+        1. Retrieves relevant context from RAG if enabled
+        2. Adds RAG context as a SystemMessage to the conversation
+        3. Adds the user's question as a HumanMessage to the conversation
+        4. Gets the processed messages according to the memory strategy
+        5. Sends them to the LLM to get a response
+        6. Adds the AI's response to the conversation history
+        7. Returns the response
 
         Args:
             question: The user's question
@@ -37,18 +39,21 @@ class ChatBOT:
         Returns:
             The AI's response as a string
         """
-        # Add the user message to the conversation history
+        # Retrieve context from RAG if enabled
         context: list[str] | None = self.rag.get_context(user_message=question) if self.rag.is_enabled() else None
-        if context:
-            question_with_context: str = (
-                f"Use the following context to answer the question:\n\n"
-                f"Context:\n{context}\n\n"
-                f"Question: {question}"
-            )
-        else:
-            question_with_context = question
 
-        self._conversation.add_user_message(content=question_with_context)
+        # Add RAG context as SystemMessage if available
+        if context:
+            context_text: str = "\n".join(context)
+            context_message: str = (
+                f"RELEVANT CONTEXT:\n"
+                f"Use the following information to answer the user's question:\n\n"
+                f"{context_text}"
+            )
+            self._conversation.add_message(message=SystemMessage(content=context_message))
+
+        # Add the user's question as HumanMessage (clean, without context)
+        self._conversation.add_message(message=HumanMessage(content=question))
         # Get the messages to send to the LLM (processed by memory strategy)
         messages_for_llm: list[BaseMessage] = self._conversation.get_messages_for_llm()
         # Logging the messages to send to the LLM
@@ -59,8 +64,8 @@ class ChatBOT:
             role: str = msg.__class__.__name__.replace("Message", "")
             content = msg.content if isinstance(msg.content, str) else str(msg.content)
             # Truncate long messages for readability
-            if len(content) > 200:
-                content = content[:200] + "..."
+            # if len(content) > 200:
+            #    content = content[:200] + "..."
             self._logger.debug(f"[{i}] {role}: {content}")
         self._logger.debug("=" * 80)
         # Get the answer from the model
@@ -68,7 +73,7 @@ class ChatBOT:
         # Extract content as string (handle both str and list types)
         content: str = ai_message.content if isinstance(ai_message.content, str) else str(ai_message.content)
         # Add the AI response to the conversation history
-        self._conversation.add_ai_message(content=content)
+        self._conversation.add_message(message=ai_message)
         return content
 
     def clear_conversation(self) -> None:

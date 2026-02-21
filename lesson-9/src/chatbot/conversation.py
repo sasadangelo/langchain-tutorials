@@ -3,7 +3,7 @@
 # Licensed under the MIT License. See LICENSE.md for details.
 # -----------------------------------------------------------------------------
 from core import LoggerManager
-from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
+from langchain_core.messages import SystemMessage
 from langchain_core.messages.base import BaseMessage
 from memory import BaseChatMemoryStrategy, MemoryFactory
 
@@ -37,23 +37,14 @@ class Conversation:
             window_size = getattr(self._memory_strategy, "_window")
             self._logger.info(f"Window Size: {window_size} exchanges ({window_size * 2} messages)")
 
-    def add_user_message(self, content: str) -> None:
+    def add_message(self, message: BaseMessage) -> None:
         """
-        Add a user message to the conversation history.
+        Add a message to the conversation history.
 
         Args:
-            content: The user's message content
+            message: A LangChain message (HumanMessage, AIMessage, SystemMessage, etc.)
         """
-        self._history.append(HumanMessage(content=content))
-
-    def add_ai_message(self, content: str) -> None:
-        """
-        Add an AI message to the conversation history.
-
-        Args:
-            content: The AI's response content
-        """
-        self._history.append(AIMessage(content=content))
+        self._history.append(message)
 
     def get_messages_for_llm(self) -> list[BaseMessage]:
         """

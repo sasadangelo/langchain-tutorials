@@ -16,4 +16,5 @@ class EmbeddingProtocol:
 class OllamaEmbeddingProtocol(EmbeddingProtocol):
     def __init__(self) -> None:
         model_name: str = chatterpy_config.rag.embedding_model
-        super().__init__(model_name=model_name, embeddings=OllamaEmbeddings(model=model_name))
+        api_url: str = chatterpy_config.protocol.api_url
+        super().__init__(model_name=model_name, embeddings=OllamaEmbeddings(model=model_name, base_url=api_url))

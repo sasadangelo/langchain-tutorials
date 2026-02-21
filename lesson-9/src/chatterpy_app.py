@@ -58,6 +58,10 @@ def main() -> None:
     except EOFError:
         # Terminate the conversation
         print("\nBye.")
+    finally:
+        # Clean up resources before exit
+        if hasattr(chatbot, "rag") and chatbot.rag and hasattr(chatbot.rag, "db") and chatbot.rag.db:
+            chatbot.rag.db.close()
 
 
 if __name__ == "__main__":

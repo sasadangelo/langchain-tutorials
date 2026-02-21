@@ -7,7 +7,7 @@ from embeddings.embedding_protocol import EmbeddingProtocol, OllamaEmbeddingProt
 
 
 class EmbeddingProtocolFactory:
-    providers: dict[str, type[OllamaEmbeddingProtocol]] = {
+    protocols: dict[str, type[OllamaEmbeddingProtocol]] = {
         "ollama": OllamaEmbeddingProtocol,
     }
 
@@ -22,7 +22,7 @@ class EmbeddingProtocolFactory:
 
         # Otherwise, create it
         protocol_name: str = chatterpy_config.rag.embedding_protocol
-        protocol_class: type[OllamaEmbeddingProtocol] | None = cls.providers.get(protocol_name)
+        protocol_class: type[OllamaEmbeddingProtocol] | None = cls.protocols.get(protocol_name)
         if not protocol_class:
             raise ValueError(f"Unsupported protocol: {protocol_name}")
         cls._instance = protocol_class()
