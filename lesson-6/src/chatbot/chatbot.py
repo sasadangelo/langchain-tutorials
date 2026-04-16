@@ -15,7 +15,7 @@ class ChatBOT:
         # Initialize the model provider according to the configuration file config.yml.
         self._protocol: LLMProtocol = LLMProtocolFactory.get_protocol()
         # Generate text using the model
-        system_message = chatterpy_config.system_message
+        system_message: str = chatterpy_config.system_message
         self._logger.info(f"System Message: {system_message}")
         self._conversation.add_message(message=SystemMessage(content=chatterpy_config.system_message))
 
