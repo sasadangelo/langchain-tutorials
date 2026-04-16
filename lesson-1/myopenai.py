@@ -3,7 +3,6 @@
 # Licensed under the MIT License. See LICENSE.md for details.
 # -----------------------------------------------------------------------------
 from dotenv import load_dotenv
-from langchain_core.messages.ai import AIMessage
 from langchain_openai import ChatOpenAI
 
 # Load the .env file for environment variables like API keys
@@ -19,7 +18,7 @@ load_dotenv()
 #     * MPT-Chat local server
 #     * Any other server that supports the OpenAI REST API spec
 chat: ChatOpenAI = ChatOpenAI(model="llama3.1:latest", base_url="http://localhost:11434/v1")
-# Send a prompt to the model
-response: AIMessage = chat.invoke(input="Who is Robinson Crusoe?")
-# Print the model's response
-print(response.content)
+# Send a prompt to the model with streaming
+for chunk in chat.stream(input="Who is Robinson Crusoe?"):
+    print(chunk.content, end="", flush=True)
+print("")

@@ -3,7 +3,7 @@
 # Licensed under the MIT License. See LICENSE.md for details.
 # -----------------------------------------------------------------------------
 from dotenv import load_dotenv
-from langchain_core.messages import AIMessage, HumanMessage
+from langchain_core.messages import HumanMessage
 from protocols import LLMProtocol, LLMProtocolFactory
 
 # Load environment variables
@@ -17,11 +17,11 @@ try:
         # Input from the user
         user_input: str = input("You: ")
 
-        # Get the answer from the model
-        ai_response: AIMessage = protocol.invoke(messages=[HumanMessage(content=user_input)])
-
-        # Print the AI reply
-        print(f"Assistant: {ai_response.content}")
+        # Generate the answer using streaming
+        # The response will appear progressively, chunk by chunk
+        for chunk in protocol.stream(messages=[HumanMessage(content=user_input)]):
+            print(chunk.content, end="", flush=True)
+        print()  # New line at the end
 except EOFError:
     # Terminate the conversation when the user press CTRL-D
     print("\nBye.")

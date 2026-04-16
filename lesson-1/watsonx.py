@@ -7,7 +7,6 @@ from typing import Any
 
 from dotenv import load_dotenv
 from ibm_watsonx_ai.metanames import GenTextParamsMetaNames as GenParams
-from langchain_core.messages.ai import AIMessage
 from langchain_ibm import ChatWatsonx
 
 # Load the .env file
@@ -22,16 +21,16 @@ parameters: dict[str, Any] = {
 }
 
 # Retrieve the project ID from the environment variable
-space_id: str | None = os.getenv("WATSONX_SPACE_ID")
+project_id: str | None = os.getenv("WATSONX_PROJECT_ID")
 
 chat: ChatWatsonx = ChatWatsonx(
     model_id="ibm/granite-4-h-small",
-    url="https://eu-de.ml.cloud.ibm.com",  # type: ignore[arg-type]  # ChatWatsonx expects SecretStr but accepts str at
-    # runtime. The problem is ignored because an URL is not a secret in our opinion.
-    space_id=space_id,
+    url="https://us-south.ml.cloud.ibm.com",  # type: ignore[arg-type]  # ChatWatsonx expects SecretStr but accepts str
+    # at runtime. The problem is ignored because an URL is not a secret in our opinion.
+    project_id=project_id,
     params=parameters,
 )
-# Send a prompt to the model
-response: AIMessage = chat.invoke(input="Who is Robinson Crusoe?")
-# Print the model's response
-print(response.content)
+# Send a prompt to the model with streaming
+for chunk in chat.stream(input="Who is Robinson Crusoe?"):
+    print(chunk.content, end="", flush=True)
+print("")

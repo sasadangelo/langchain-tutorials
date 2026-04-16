@@ -4,7 +4,7 @@
 # -----------------------------------------------------------------------------
 from dotenv import load_dotenv
 from langchain_core.language_models.base import LanguageModelInput
-from langchain_core.messages import AIMessage, HumanMessage
+from langchain_core.messages import HumanMessage
 from protocols import LLMProtocol, LLMProtocolFactory
 
 # Load environment variables
@@ -16,6 +16,8 @@ protocol: LLMProtocol = LLMProtocolFactory.get_protocol()
 # Inizialize the message list
 messages: LanguageModelInput = [HumanMessage("Who is Robinson Crusoe?")]
 
-# Generate the answer using the model
-result: AIMessage = protocol.invoke(messages)
-print(result.content)
+# Generate the answer using streaming
+# The response will appear progressively, chunk by chunk
+for chunk in protocol.stream(messages):
+    print(chunk.content, end="", flush=True)
+print()  # New line at the end
