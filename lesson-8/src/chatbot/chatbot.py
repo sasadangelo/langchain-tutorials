@@ -2,9 +2,11 @@
 # Copyright (c) 2026 Salvatore D'Angelo, Code4Projects
 # Licensed under the MIT License. See LICENSE.md for details.
 # -----------------------------------------------------------------------------
+from collections.abc import Iterator
+
 from chatbot.conversation import Conversation
 from core import LoggerManager, chatterpy_config
-from langchain_core.messages import AIMessage, BaseMessage
+from langchain_core.messages import AIMessageChunk, BaseMessage
 from protocols import LLMProtocol, LLMProtocolFactory
 
 
@@ -18,7 +20,8 @@ class ChatBOT:
         self._logger.info(f"System Message: {system_message}")
         self._conversation = Conversation(system_message=system_message)
 
-    def get_answer(self, question: str) -> str:
+    # Once the user insert the question, this method is called to generate the answer.
+    def get_answer(self, question: str) -> Iterator[AIMessageChunk]:
         """
         Get an answer from the chatbot for the given question.
 
@@ -52,12 +55,20 @@ class ChatBOT:
             self._logger.debug(f"[{i}] {role}: {content}")
         self._logger.debug("=" * 80)
         # Get the answer from the model
-        ai_message: AIMessage = self._protocol.invoke(messages=messages_for_llm)
-        # Extract content as string (handle both str and list types)
-        content: str = ai_message.content if isinstance(ai_message.content, str) else str(ai_message.content)
-        # Add the AI response to the conversation history
-        self._conversation.add_ai_message(content=content)
-        return content
+        ai_response_chunk: AIMessageChunk | None = None
+
+        # Stream the answer from the model while accumulating the final AIMessage
+        for chunk in self._protocol.stream(messages=messages_for_llm):
+            yield chunk
+            ai_response_chunk = chunk if ai_response_chunk is None else ai_response_chunk + chunk
+
+        if ai_response_chunk is not None:
+            content: str = (
+                ai_response_chunk.content
+                if isinstance(ai_response_chunk.content, str)
+                else str(ai_response_chunk.content)
+            )
+            self._conversation.add_ai_message(content=content)
 
     def clear_conversation(self) -> None:
         """Clear the conversation history."""
