@@ -2,11 +2,12 @@
 # Copyright (c) 2026 Salvatore D'Angelo, Code4Projects
 # Licensed under the MIT License. See LICENSE.md for details.
 # -----------------------------------------------------------------------------
+from collections.abc import Iterator
 from typing import Any
 
 from core import LoggerManager, chatterpy_config
 from langchain_core.language_models.base import LanguageModelInput
-from langchain_core.messages import AIMessage
+from langchain_core.messages import AIMessage, AIMessageChunk
 from langchain_openai import ChatOpenAI
 from protocols.protocol import LLMProtocol
 
@@ -15,9 +16,9 @@ from protocols.protocol import LLMProtocol
 # config.yml. To use ChatGPT 4 set protocol.name="gpt-4" and protocol.api_url="https://api.openai.com/v1" in the
 # config.yml
 class OpenAIProtocol(LLMProtocol):
-    _logger = LoggerManager.get_logger(__name__)
+    _logger = LoggerManager.get_logger(name=__name__)
 
-    def create_protocol(self):
+    def create_protocol(self) -> None:
         model: str = chatterpy_config.protocol.model.name
         base_url: str = chatterpy_config.protocol.api_url
         params = dict(chatterpy_config.protocol.model.parameters)
@@ -55,3 +56,6 @@ class OpenAIProtocol(LLMProtocol):
 
     def invoke(self, messages: LanguageModelInput) -> AIMessage:
         return self._protocol.invoke(input=messages)
+
+    def stream(self, messages: LanguageModelInput) -> Iterator[AIMessageChunk]:
+        return self._protocol.stream(input=messages)
