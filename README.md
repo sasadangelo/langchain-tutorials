@@ -14,6 +14,10 @@ These tutorials guide you step by step in building a **RAG Chatbot** using **Lar
 - [Lesson 8: DataWeave CLI and Qdrant](lesson-8/README.md)
 - [Lesson 9: RAG Implementation](lesson-9/README.md)
 - [Lesson 10: Add UI Interface with Streamlit](lesson-10/README.md)
+- [Lesson 11: Introduction to Session Management](lesson-11/README.md)
+- [Lesson 12: Multiple Sessions Management](lesson-12/README.md)
+
+- [Chatbot Evolution Roadmap](ROADMAP.md)
 
 ---
 
