@@ -2,9 +2,11 @@
 # Copyright (c) 2026 Salvatore D'Angelo, Code4Projects
 # Licensed under the MIT License. See LICENSE.md for details.
 # -----------------------------------------------------------------------------
+from collections.abc import Iterator
+
 from chatbot.conversation import Conversation
 from core import LoggerManager, chatterpy_config
-from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, SystemMessage
+from langchain_core.messages import AIMessage, AIMessageChunk, BaseMessage, HumanMessage, SystemMessage
 from protocols import LLMProtocol, LLMProtocolFactory
 from rag import RAG
 
@@ -20,7 +22,8 @@ class ChatBOT:
         self._logger.info(f"System Message: {system_message}")
         self._conversation = Conversation(system_message=system_message)
 
-    def get_answer(self, question: str) -> str:
+    # Once the user insert the question, this method is called to generate the answer.
+    def get_answer(self, question: str) -> Iterator[AIMessageChunk]:
         """
         Get an answer from the chatbot for the given question.
 
@@ -64,17 +67,25 @@ class ChatBOT:
             role: str = msg.__class__.__name__.replace("Message", "")
             content = msg.content if isinstance(msg.content, str) else str(msg.content)
             # Truncate long messages for readability
-            # if len(content) > 200:
-            #    content = content[:200] + "..."
+            if len(content) > 200:
+                content = content[:200] + "..."
             self._logger.debug(f"[{i}] {role}: {content}")
         self._logger.debug("=" * 80)
         # Get the answer from the model
-        ai_message: AIMessage = self._protocol.invoke(messages=messages_for_llm)
-        # Extract content as string (handle both str and list types)
-        content: str = ai_message.content if isinstance(ai_message.content, str) else str(ai_message.content)
-        # Add the AI response to the conversation history
-        self._conversation.add_message(message=ai_message)
-        return content
+        ai_response_chunk: AIMessageChunk | None = None
+
+        # Stream the answer from the model while accumulating the final AIMessage
+        for chunk in self._protocol.stream(messages=messages_for_llm):
+            yield chunk
+            ai_response_chunk = chunk if ai_response_chunk is None else ai_response_chunk + chunk
+
+        if ai_response_chunk is not None:
+            ai_message: AIMessage = AIMessage(
+                content=ai_response_chunk.content,
+                additional_kwargs=ai_response_chunk.additional_kwargs,
+                response_metadata=ai_response_chunk.response_metadata,
+            )
+            self._conversation.add_message(message=ai_message)
 
     def clear_conversation(self) -> None:
         """Clear the conversation history."""
