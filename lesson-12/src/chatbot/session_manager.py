@@ -32,24 +32,33 @@ class SessionManager:
         self.create_session()
         self._logger.info("SessionManager initialized")
 
-    def create_session(self, session_id: str | None = None) -> Session:
+    def create_session(
+        self,
+        session_id: str | None = None,
+        session_name: str | None = None,
+    ) -> Session:
         """
         Create a new session.
 
         Args:
             session_id: Optional session ID. If not provided, a new UUID will be generated
+            session_name: Optional session name
 
         Returns:
             The newly created Session object
         """
-        session = Session(system_message=self._system_message, session_id=session_id)
+        session = Session(
+            system_message=self._system_message,
+            session_id=session_id,
+            session_name=session_name,
+        )
         self._sessions[session.session_id] = session
 
         # Set as current session if it's the first one or no current session exists
         if self._current_session_id is None:
             self._current_session_id = session.session_id
 
-        self._logger.info(f"Session created: {session.session_id}")
+        self._logger.info(f"Session created: {session.session_id} ({session.session_name})")
         return session
 
     def get_session(self, session_id: str) -> Session | None:
@@ -133,14 +142,20 @@ class SessionManager:
         self._logger.info(f"Session deleted: {session_id}")
         return True
 
-    def list_sessions(self) -> list[str]:
+    def list_sessions(self) -> list[dict[str, str]]:
         """
-        Get a list of all session IDs.
+        Get a list of all sessions with ID and name.
 
         Returns:
-            A list of session IDs
+            A list of session metadata dictionaries
         """
-        return list(self._sessions.keys())
+        return [
+            {
+                "id": session.session_id,
+                "name": session.session_name,
+            }
+            for session in self._sessions.values()
+        ]
 
     def get_session_count(self) -> int:
         """

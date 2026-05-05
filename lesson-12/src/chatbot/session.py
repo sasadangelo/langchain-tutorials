@@ -2,6 +2,7 @@
 # Copyright (c) 2026 Salvatore D'Angelo, Code4Projects
 # Licensed under the MIT License. See LICENSE.md for details.
 # -----------------------------------------------------------------------------
+import re
 import uuid
 
 from chatbot.conversation import Conversation
@@ -16,19 +17,28 @@ class Session:
     preparing the architecture for future multi-conversation support.
     """
 
-    def __init__(self, system_message: str, session_id: str | None = None) -> None:
+    DEFAULT_NAME = "Nuova chat"
+
+    def __init__(
+        self,
+        system_message: str,
+        session_id: str | None = None,
+        session_name: str | None = None,
+    ) -> None:
         """
         Initialize a session with a unique ID and conversation.
 
         Args:
             system_message: The system prompt that defines the AI's behavior
             session_id: Optional session ID. If not provided, a new UUID will be generated
+            session_name: Optional session name. If not provided, a default name is used
         """
         self._logger = LoggerManager.get_logger(name=self.__class__.__name__)
         self._session_id: str = session_id if session_id else str(uuid.uuid4())
+        self._session_name: str = session_name if session_name else self.DEFAULT_NAME
         self._conversation: Conversation = Conversation(system_message=system_message)
 
-        self._logger.info(f"Session created with ID: {self._session_id}")
+        self._logger.info(f"Session created with ID: {self._session_id}, name: {self._session_name}")
 
     @property
     def session_id(self) -> str:
@@ -41,6 +51,16 @@ class Session:
         return self._session_id
 
     @property
+    def session_name(self) -> str:
+        """
+        Get the session name.
+
+        Returns:
+            The session display name
+        """
+        return self._session_name
+
+    @property
     def conversation(self) -> Conversation:
         """
         Get the conversation associated with this session.
@@ -49,3 +69,25 @@ class Session:
             The Conversation object
         """
         return self._conversation
+
+    def update_name_from_user_message(self, message: str) -> None:
+        """
+        Update the session name from the first meaningful user message.
+
+        Args:
+            message: The user message used to derive the session name
+        """
+        if self._session_name != self.DEFAULT_NAME:
+            return
+
+        cleaned_message: str = re.sub(pattern=r"[\r\n\t]+", repl=" ", string=message)
+        cleaned_message = " ".join(cleaned_message.strip().split())
+        if not cleaned_message:
+            return
+        session_name: str = cleaned_message[:40].rstrip(" ,.;:!?")
+        if len(cleaned_message) > 40:
+            session_name += "..."
+
+        if session_name:
+            self._session_name = session_name
+            self._logger.info(f"Session {self._session_id} renamed to: {self._session_name}")

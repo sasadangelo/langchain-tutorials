@@ -69,8 +69,14 @@ class ChatBotPage(Page):
 
         # Display current session
         current_session_id: str | None = chatbot.get_session_id()
-        if current_session_id:
-            st.sidebar.markdown(body=f"**Current:** `{current_session_id[:8]}...`")
+        sessions: list[dict[str, str]] = chatbot.list_sessions()
+        current_session: dict[str, str] | None = next(
+            (session for session in sessions if session["id"] == current_session_id),
+            None,
+        )
+        if current_session is not None:
+            st.sidebar.markdown(body=f"**Current:** {current_session['name']}")
+            st.sidebar.caption(body=f"ID: {current_session['id'][:8]}...")
 
         # New session button
         if st.sidebar.button(label="➕ New Session", key="new_session"):
@@ -78,17 +84,18 @@ class ChatBotPage(Page):
             st.rerun()
 
         # List all sessions
-        sessions: list[str] = chatbot.list_sessions()
         st.sidebar.markdown(body=f"**All Sessions ({len(sessions)}):**")
 
-        for session_id in sessions:
+        for session in sessions:
+            session_id: str = session["id"]
+            session_name: str = session["name"]
             col1, col2 = st.sidebar.columns(spec=[3, 1])
             with col1:
-                # Show shortened session ID
-                short_id: str = session_id[:8] + "..."
                 is_current: bool = session_id == current_session_id
-                label = f"{'→ ' if is_current else '   '}{short_id}"
-                if st.button(label, key=f"switch_{session_id}", use_container_width=True):
+                prefix = "→ " if is_current else ""
+                label = f"{prefix}{session_name}"
+                help_text = f"Session ID: {session_id}"
+                if st.button(label, key=f"switch_{session_id}", use_container_width=True, help=help_text):
                     if not is_current:
                         chatbot.switch_session(session_id)
                         st.rerun()

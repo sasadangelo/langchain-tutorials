@@ -61,6 +61,7 @@ class ChatBOT:
             )
             current_session.conversation.add_message(message=SystemMessage(content=context_message))
 
+        current_session.update_name_from_user_message(message=question)
         # Add the user's question as HumanMessage (clean, without context)
         current_session.conversation.add_message(message=HumanMessage(content=question))
         # Get the messages to send to the LLM (processed by memory strategy)
@@ -164,12 +165,12 @@ class ChatBOT:
         """
         return self._session_manager.switch_session(session_id)
 
-    def list_sessions(self) -> list[str]:
+    def list_sessions(self) -> list[dict[str, str]]:
         """
-        Get a list of all session IDs.
+        Get a list of all sessions with ID and name.
 
         Returns:
-            A list of session IDs
+            A list of session metadata dictionaries
         """
         return self._session_manager.list_sessions()
 

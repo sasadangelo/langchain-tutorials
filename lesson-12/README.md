@@ -9,6 +9,8 @@ In this lesson we introduce multiple sessions management. Users can now create, 
 A new `SessionManager` class has been added to manage multiple chat sessions:
 
 - Create new sessions with unique IDs
+- Associate a human-readable name with each session
+- Automatically derive the session name from the first user message
 - Switch between sessions
 - Delete sessions (with protection against deleting the last session)
 - List all available sessions
@@ -30,6 +32,7 @@ The text-based interface now supports the following commands:
 The Streamlit interface now includes:
 
 - **Session sidebar**: Shows all sessions with the current one highlighted
+- **Automatic session naming**: New sessions start as `Nuova chat` and are renamed from the first user message
 - **New Session button**: Create a new session instantly
 - **Session switching**: Click on any session to switch to it
 - **Delete session**: Delete any session (except if it's the only one)
@@ -101,6 +104,8 @@ python3 datawaeve_app.py [--pdf <pdf file name>] [--wikipedia <wikipedia url>]
 ### Session Management
 
 - Each session maintains its own conversation history
-- Sessions are identified by UUID
+- Sessions are identified by UUID and also expose a display name
+- New sessions start with the default name `Nuova chat`
+- The first meaningful user message automatically becomes the session name
 - The system always maintains at least one session
 - Deleting the current session automatically switches to another available session

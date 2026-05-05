@@ -51,32 +51,32 @@ def handle_command(command: str) -> None:
     cmd: str = command.lower().strip()
 
     if cmd == "/new":
-        session_id: str = chatbot.create_session()
-        print(f"✓ Created and switched to new session: {session_id}")
-        logger.info(f"Created new session: {session_id}")
+        new_session_id: str = chatbot.create_session()
+        print(f"✓ Created and switched to new session: {new_session_id}")
+        logger.info(f"Created new session: {new_session_id}")
 
     elif cmd == "/list":
-        sessions = chatbot.list_sessions()
-        current_id = chatbot.get_session_id()
+        sessions: list[dict[str, str]] = chatbot.list_sessions()
+        current_id: str | None = chatbot.get_session_id()
         print(f"\nSessions ({len(sessions)}):")
-        for sid in sessions:
-            marker = "→" if sid == current_id else " "
-            print(f"  {marker} {sid}")
+        for session_info in sessions:
+            marker = "*" if session_info["id"] == current_id else " "
+            print(f"  {marker} {session_info['name']} ({session_info['id']})")
         print()
 
     elif cmd == "/switch":
         sessions = chatbot.list_sessions()
         current_id = chatbot.get_session_id()
         print("\nAvailable sessions:")
-        for i, sid in enumerate(sessions, 1):
-            marker = "→" if sid == current_id else " "
-            print(f"  {i}. {marker} {sid}")
+        for i, session_info in enumerate(sessions, 1):
+            marker = "*" if session_info["id"] == current_id else " "
+            print(f"  {i}. {marker} {session_info['name']} ({session_info['id']})")
         try:
             choice = input("\nEnter session number to switch to (or press Enter to cancel): ").strip()
             if choice:
                 idx = int(choice) - 1
                 if 0 <= idx < len(sessions):
-                    session_id = sessions[idx]
+                    session_id = sessions[idx]["id"]
                     if chatbot.switch_session(session_id):
                         print(f"✓ Switched to session: {session_id}")
                         logger.info(f"Switched to session: {session_id}")
@@ -94,19 +94,20 @@ def handle_command(command: str) -> None:
             print("✗ Cannot delete the last session")
             return
         print("\nAvailable sessions:")
-        for i, sid in enumerate(sessions, 1):
-            marker = "→" if sid == current_id else " "
-            print(f"  {i}. {marker} {sid}")
+        for i, session_info in enumerate(sessions, 1):
+            marker = "*" if session_info["id"] == current_id else " "
+            print(f"  {i}. {marker} {session_info['name']} ({session_info['id']})")
         try:
-            choice = input("\nEnter session number to delete (or press Enter to cancel): ").strip()
+            choice: str = input("\nEnter session number to delete (or press Enter to cancel): ").strip()
             if choice:
-                idx = int(choice) - 1
+                idx: int = int(choice) - 1
                 if 0 <= idx < len(sessions):
-                    session_id = sessions[idx]
-                    confirm = input(f"Delete session {session_id}? (y/N): ").strip().lower()
+                    session_id = sessions[idx]["id"]
+                    session_name = sessions[idx]["name"]
+                    confirm = input(f"Delete session '{session_name}' ({session_id})? (y/N): ").strip().lower()
                     if confirm == "y":
                         if chatbot.delete_session(session_id):
-                            print(f"✓ Deleted session: {session_id}")
+                            print(f"✓ Deleted session: {session_name} ({session_id})")
                             if session_id == current_id:
                                 print(f"✓ Switched to session: {chatbot.get_session_id()}")
                             logger.info(f"Deleted session: {session_id}")
